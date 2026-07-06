@@ -1,0 +1,23 @@
+{
+  "name": "createyournextfour",
+  "version": "1.0.0",
+  "description": "AI-powered college opportunity finder for Texas universities",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.55.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
+    "@types/node": "^20",
+    "@vercel/node": "^5.0.0",
+    "typescript": "^5"
+  }
+}
