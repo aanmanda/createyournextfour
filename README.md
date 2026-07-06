@@ -63,3 +63,4 @@ ANTHROPIC_API_KEY=your_key_here
 ## How it works
 
 The frontend (`public/index.html`) collects the student's university, major, and interests, then POSTs to `/api/recommend`. The serverless function (`api/recommend.js`) calls the Anthropic API with your secret key — which never touches the browser. Results are returned as JSON and rendered as opportunity cards.
+# create-your-next-four
