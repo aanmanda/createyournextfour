@@ -523,6 +523,189 @@ body {
   line-height: 1.6;
 }
 
+/* ── ROADMAP ── */
+.roadmap-prompt {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  max-width: 480px;
+  text-align: center;
+}
+
+.roadmap-prompt-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--blue-light);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.roadmap-prompt h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+
+.roadmap-prompt p {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+}
+
+.btn-go-home {
+  padding: 10px 20px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background 0.12s;
+}
+
+.btn-go-home:hover { background: var(--blue-dark); }
+
+.roadmap-profile-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  max-width: 680px;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.roadmap-profile-info { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+.roadmap-profile-info strong { color: var(--ink); font-weight: 600; }
+
+.btn-gen-roadmap {
+  padding: 10px 20px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background 0.12s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-gen-roadmap:hover:not(:disabled) { background: var(--blue-dark); }
+.btn-gen-roadmap:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.roadmap-year-header {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-top: 0.5rem;
+}
+
+.roadmap-year-header:first-child { margin-top: 0; }
+
+.semester-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.125rem 1.25rem;
+}
+
+.semester-header {
+  margin-bottom: 0.75rem;
+}
+
+.semester-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.2rem;
+}
+
+.semester-focus {
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+
+.roadmap-opp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.roadmap-opp {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.priority-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.priority-dot.High { background: var(--blue); }
+.priority-dot.Medium { background: var(--ink-3); }
+.priority-dot.Low { background: var(--border); }
+
+.roadmap-opp-body { flex: 1; min-width: 0; }
+
+.roadmap-opp-action {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 1px;
+}
+
+.roadmap-opp-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: 2px;
+}
+
+.roadmap-opp-note {
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+
+@media (max-width: 680px) {
+  .roadmap-grid { grid-template-columns: 1fr; }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .results-grid { grid-template-columns: repeat(2, 1fr); }
@@ -543,27 +726,27 @@ body {
   <div class="sidebar-logo">CreateYourNextFour</div>
   <nav class="nav-section">
 
-    <div class="nav-item active">
+    <div class="nav-item active" data-view="home" onclick="showView('home')">
       <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
       Home
     </div>
 
-    <div class="nav-item">
+    <div class="nav-item" data-view="explore">
       <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
       Explore Opportunities
     </div>
 
-    <div class="nav-item">
+    <div class="nav-item" data-view="universities">
       <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
       My Universities
     </div>
 
-    <div class="nav-item">
+    <div class="nav-item" data-view="roadmap" onclick="showView('roadmap')">
       <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
       Roadmap
     </div>
 
-    <div class="nav-item">
+    <div class="nav-item" data-view="settings">
       <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
       Settings
     </div>
@@ -573,6 +756,9 @@ body {
 
 <!-- ── MAIN ── -->
 <main class="main">
+
+<!-- ══ HOME VIEW ══ -->
+<div id="home-view">
 
   <div class="page-header">
     <h1>Find hidden opportunities faster</h1>
@@ -642,6 +828,58 @@ body {
     MVP note: recommendations are based on public university pages and student-facing program descriptions. Always verify details directly with the program.
   </div>
 
+</div><!-- end #home-view -->
+
+<!-- ══ ROADMAP VIEW ══ -->
+<div id="roadmap-view" style="display:none">
+
+  <div class="page-header">
+    <h1>Your four-year roadmap</h1>
+    <p>A semester-by-semester plan tailored to your university, major, and interests.</p>
+  </div>
+
+  <!-- No profile state -->
+  <div id="roadmap-no-profile" style="display:none">
+    <div class="roadmap-prompt">
+      <div class="roadmap-prompt-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
+      </div>
+      <h2>Generate opportunities first</h2>
+      <p>Head to Home, fill out your university, major, and interests, then come back to build your roadmap.</p>
+      <button class="btn-go-home" onclick="showView('home')">Go to Home →</button>
+    </div>
+  </div>
+
+  <!-- Has profile state -->
+  <div id="roadmap-has-profile" style="display:none">
+    <div class="roadmap-profile-card">
+      <div class="roadmap-profile-info" id="roadmap-profile-summary"></div>
+      <button class="btn-gen-roadmap" id="btn-gen-roadmap" onclick="generateRoadmap()">Generate my roadmap</button>
+    </div>
+
+    <!-- Roadmap loading -->
+    <div id="roadmap-loading" style="display:none">
+      <div class="loading-inline">
+        <div class="spinner"></div>
+        Building your four-year roadmap — this takes about 15 seconds…
+      </div>
+    </div>
+
+    <!-- Roadmap error -->
+    <div id="roadmap-error" style="display:none"></div>
+
+    <!-- Roadmap result -->
+    <div id="roadmap-result" style="display:none">
+      <div class="roadmap-grid" id="roadmap-grid"></div>
+      <div class="mvp-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Roadmap is AI-generated. Program timing and availability may vary — verify directly with each program before applying.
+      </div>
+    </div>
+  </div>
+
+</div><!-- end #roadmap-view -->
+
 </main>
 
 <script>
@@ -649,6 +887,8 @@ body {
   var allOpps = [];
   var activeTypeFilter = null;
   var currentUni = '';
+  var currentMajor = '';
+  var roadmapGenerated = false;
 
   var INTEREST_OPTIONS = [
     'Research', 'Entrepreneurship', 'Leadership', 'Honors Programs',
@@ -770,6 +1010,7 @@ body {
     if (!university || !major || selectedInterests.length === 0) return;
 
     currentUni = university;
+    currentMajor = major;
     document.getElementById('results-section').style.display = 'none';
     document.getElementById('error-section').style.display = 'none';
     document.getElementById('loading-section').style.display = 'block';
@@ -816,6 +1057,100 @@ body {
       btn.textContent = 'Copied!';
       setTimeout(function() { btn.textContent = 'Copy list'; }, 2000);
     });
+  }
+
+  /* ── Views ── */
+  function showView(view) {
+    document.getElementById('home-view').style.display = view === 'home' ? '' : 'none';
+    document.getElementById('roadmap-view').style.display = view === 'roadmap' ? '' : 'none';
+
+    document.querySelectorAll('.nav-item').forEach(function(el) {
+      el.classList.toggle('active', el.getAttribute('data-view') === view);
+    });
+
+    if (view === 'roadmap') refreshRoadmapView();
+    window.scrollTo(0, 0);
+  }
+
+  function refreshRoadmapView() {
+    var hasProfile = currentUni && currentMajor && selectedInterests.length > 0;
+    document.getElementById('roadmap-no-profile').style.display = hasProfile ? 'none' : 'block';
+    document.getElementById('roadmap-has-profile').style.display = hasProfile ? 'block' : 'none';
+
+    if (hasProfile) {
+      document.getElementById('roadmap-profile-summary').innerHTML =
+        '<strong>' + esc(currentUni) + '</strong> · ' + esc(currentMajor) +
+        ' · ' + selectedInterests.slice(0,3).map(esc).join(', ') +
+        (selectedInterests.length > 3 ? ' + more' : '');
+
+      if (!roadmapGenerated) {
+        document.getElementById('roadmap-result').style.display = 'none';
+        document.getElementById('roadmap-error').style.display = 'none';
+      }
+    }
+  }
+
+  /* ── Roadmap generation ── */
+  async function generateRoadmap() {
+    document.getElementById('btn-gen-roadmap').disabled = true;
+    document.getElementById('roadmap-loading').style.display = 'block';
+    document.getElementById('roadmap-result').style.display = 'none';
+    document.getElementById('roadmap-error').style.display = 'none';
+
+    try {
+      var res = await fetch('/api/roadmap', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ university: currentUni, major: currentMajor, interests: selectedInterests })
+      });
+      var data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      roadmapGenerated = true;
+      renderRoadmap(data.roadmap);
+      document.getElementById('roadmap-result').style.display = 'block';
+    } catch(err) {
+      var errEl = document.getElementById('roadmap-error');
+      errEl.innerHTML = '<div class="error-box"><strong>Something went wrong</strong><br>' + esc(err.message) + '</div>';
+      errEl.style.display = 'block';
+    } finally {
+      document.getElementById('roadmap-loading').style.display = 'none';
+      document.getElementById('btn-gen-roadmap').disabled = false;
+    }
+  }
+
+  function renderRoadmap(semesters) {
+    var yearLabels = ['Freshman', 'Sophomore', 'Junior', 'Senior'];
+    var grid = document.getElementById('roadmap-grid');
+    var html = '';
+    var lastYear = null;
+
+    semesters.forEach(function(sem) {
+      if (sem.year !== lastYear) {
+        html += '<div class="roadmap-year-header">' + esc(sem.yearLabel || yearLabels[sem.year - 1] || ('Year ' + sem.year)) + ' Year</div>';
+        lastYear = sem.year;
+      }
+      html += '<div class="semester-card">'
+        + '<div class="semester-header">'
+        + '<div class="semester-label">' + esc(sem.semester) + '</div>'
+        + '<div class="semester-focus">' + esc(sem.focus) + '</div>'
+        + '</div>'
+        + '<div class="roadmap-opp-list">'
+        + (sem.opportunities || []).map(function(o) {
+            return '<div class="roadmap-opp">'
+              + '<div class="priority-dot ' + esc(o.priority) + '"></div>'
+              + '<div class="roadmap-opp-body">'
+              + '<div class="roadmap-opp-action">' + esc(o.action) + '</div>'
+              + '<div class="roadmap-opp-name">' + esc(o.name) + '</div>'
+              + '<div class="roadmap-opp-note">' + esc(o.note) + '</div>'
+              + '</div>'
+              + '</div>';
+          }).join('')
+        + '</div>'
+        + '</div>';
+    });
+
+    grid.innerHTML = html;
   }
 
   // init
