@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CreateYourNextFour — Texas University Opportunity Finder</title>
+<title>CreateYourNextFour</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 
 /* ── RESET ── */
@@ -14,343 +14,239 @@
 
 /* ── TOKENS ── */
 :root {
-  --bg: #F9F9F8;
+  --blue: #2563EB;
+  --blue-dark: #1D4ED8;
+  --blue-light: #EFF6FF;
+  --blue-border: #BFDBFE;
+  --bg: #F1F5F9;
   --surface: #FFFFFF;
-  --ink: #16160E;
-  --ink-2: #716F67;
-  --ink-3: #B0ADA6;
-  --border: #E3E2DC;
-  --accent: #2752A0;
-  --accent-bg: #EFF3FB;
-  --accent-hover: #1A3875;
-  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
-  --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+  --ink: #0F172A;
+  --ink-2: #475569;
+  --ink-3: #94A3B8;
+  --border: #E2E8F0;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
   --radius: 8px;
 }
 
-html { scroll-behavior: smooth; }
+html, body { height: 100%; }
 
 body {
-  font-family: var(--font-ui);
+  font-family: var(--font);
   background: var(--bg);
   color: var(--ink);
-  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  min-height: 100vh;
 }
 
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 56px;
-  display: flex; align-items: center;
-  padding: 0 2rem;
-  background: rgba(249,249,248,0.88);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
-.nav-logo {
-  font-family: var(--font-ui);
+.sidebar-logo {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--ink);
+  font-weight: 700;
+  color: var(--blue);
+  padding: 0 1.25rem;
+  margin-bottom: 2rem;
   letter-spacing: -0.01em;
+}
+
+.nav-section { flex: 1; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 1.25rem;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-2);
   cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all 0.12s;
   user-select: none;
 }
 
-.nav-logo em {
-  font-style: normal;
-  color: var(--accent);
+.nav-item:hover { background: var(--blue-light); color: var(--blue); }
+
+.nav-item.active {
+  background: var(--blue-light);
+  color: var(--blue);
+  border-left-color: var(--blue);
 }
 
-/* ── HOME ── */
-#page-home { padding-top: 56px; }
-
-/* ── HERO ── */
-.hero {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 5.5rem 2rem 5rem;
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 4.5rem;
-  align-items: center;
-  min-height: calc(100vh - 56px);
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.hero-eyebrow {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-bottom: 1.5rem;
+/* ── MAIN ── */
+.main {
+  flex: 1;
+  padding: 2.5rem 2rem 4rem;
+  min-width: 0;
+  overflow-y: auto;
 }
 
-.hero-h1 {
-  font-family: var(--font-display);
-  font-size: clamp(2.4rem, 4vw, 3.6rem);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+.page-header { margin-bottom: 1.75rem; }
+
+.page-header h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
   color: var(--ink);
-  text-wrap: balance;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.02em;
 }
 
-.hero-sub {
-  font-size: 16px;
-  color: var(--ink-2);
-  line-height: 1.75;
-  max-width: 46ch;
-}
+.page-header p { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
 
-/* ── PICKER ── */
-.picker {
+/* ── FORM CARD ── */
+.form-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 1.5rem;
+  max-width: 680px;
+  margin-bottom: 1.5rem;
 }
 
-.picker-label {
+.form-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+
+.field { margin-bottom: 1rem; }
+
+.field-label {
+  display: block;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-3);
-  margin-bottom: 1rem;
-}
-
-.uni-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 1.25rem;
-}
-
-.uni-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 14px;
-  border: 1px solid var(--border);
-  border-left: 3px solid transparent;
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: background 0.12s, border-left-color 0.12s;
-  user-select: none;
-}
-
-.uni-item:hover { background: var(--accent-bg); }
-
-.uni-item.selected {
-  border-left-color: var(--accent);
-  background: var(--accent-bg);
-}
-
-.uni-radio {
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  border: 1.5px solid var(--border);
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.12s;
-}
-
-.uni-item.selected .uni-radio {
-  border-color: var(--accent);
-  background: var(--accent);
-}
-
-.uni-item.selected .uni-radio::after {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: #fff;
-}
-
-.uni-name { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.3; }
-.uni-loc  { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
-
-/* ── BUTTONS ── */
-.btn-primary {
-  display: block;
-  width: 100%;
-  padding: 13px 20px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius);
-  font-family: var(--font-ui);
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  letter-spacing: -0.01em;
-  transition: background 0.12s;
-  text-align: center;
-}
-
-.btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
-.btn-primary:disabled { background: var(--border); color: var(--ink-3); cursor: not-allowed; }
-
-/* ── HOW IT WORKS ── */
-.how {
-  border-top: 1px solid var(--border);
-  padding: 4rem 2rem;
-}
-
-.how-inner { max-width: 1100px; margin: 0 auto; }
-
-.how-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-bottom: 2.5rem;
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-}
-
-.step-num {
-  font-family: var(--font-display);
-  font-size: 2.25rem;
-  font-weight: 300;
-  color: var(--border);
-  line-height: 1;
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.02em;
-}
-
-.step-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink);
   margin-bottom: 0.4rem;
 }
 
-.step-desc {
-  font-size: 14px;
-  color: var(--ink-2);
-  line-height: 1.7;
+.select-wrap { position: relative; }
+
+.select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--ink-3);
+  pointer-events: none;
 }
 
-/* ── FOOTER ── */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 1.5rem 2rem;
-  text-align: center;
-  font-size: 12px;
-  color: var(--ink-3);
-}
-
-/* ── FLOW PAGES ── */
-.flow-page {
-  display: none;
-  min-height: 100vh;
-  padding: calc(56px + 3.5rem) 2rem 4rem;
-  max-width: 540px;
-  margin: 0 auto;
-}
-
-.flow-page.active { display: block; }
-
-.flow-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: var(--ink-3);
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-family: var(--font-ui);
-  padding: 0;
-  margin-bottom: 2rem;
-  transition: color 0.12s;
-}
-
-.flow-back:hover { color: var(--ink); }
-
-.progress-track {
-  height: 2px;
-  background: var(--border);
-  border-radius: 2px;
-  margin-bottom: 2.5rem;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 2px;
-  transition: width 0.4s ease;
-}
-
-.flow-step-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-bottom: 0.5rem;
-}
-
-.flow-h {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 400;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-  text-wrap: balance;
-  line-height: 1.15;
-}
-
-.flow-sub {
-  font-size: 14px;
-  color: var(--ink-2);
-  margin-bottom: 1.75rem;
-  line-height: 1.65;
-}
-
-.flow-input {
-  display: block;
+.field select,
+.field input[type="text"] {
   width: 100%;
-  padding: 12px 14px;
+  padding: 10px 14px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  font-family: var(--font-ui);
-  font-size: 15px;
+  font-size: 14px;
   color: var(--ink);
   background: var(--surface);
-  margin-bottom: 1.25rem;
+  font-family: var(--font);
   outline: none;
+  transition: border-color 0.12s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.field select { padding-right: 36px; cursor: pointer; }
+
+.field select:focus,
+.field input[type="text"]:focus { border-color: var(--blue); }
+
+.field input[type="text"]::placeholder { color: var(--ink-3); }
+
+/* ── INTERESTS ── */
+.interests-selected {
+  min-height: 42px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  background: var(--surface);
   transition: border-color 0.12s;
 }
 
-.flow-input:focus { border-color: var(--accent); }
-.flow-input::placeholder { color: var(--ink-3); }
+.interests-selected.focused { border-color: var(--blue); }
 
-/* ── CHIPS ── */
-.chips-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 1.75rem;
+.interests-placeholder {
+  font-size: 14px;
+  color: var(--ink-3);
+  pointer-events: none;
 }
 
-.chip {
-  padding: 8px 16px;
-  border-radius: 999px;
+.sel-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px 3px 10px;
+  background: var(--blue-light);
+  color: var(--blue);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.sel-chip-remove {
+  background: none;
+  border: none;
+  color: var(--blue);
+  cursor: pointer;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  opacity: 0.7;
+  transition: opacity 0.1s;
+}
+
+.sel-chip-remove:hover { opacity: 1; }
+
+.interests-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.int-option {
+  padding: 6px 14px;
   border: 1px solid var(--border);
-  font-family: var(--font-ui);
+  border-radius: 999px;
   font-size: 13px;
   font-weight: 500;
   color: var(--ink-2);
@@ -360,87 +256,107 @@ footer {
   user-select: none;
 }
 
-.chip:hover { border-color: var(--accent); color: var(--accent); }
+.int-option:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
 
-.chip.on {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-bg);
-  font-weight: 600;
+/* ── FORM ACTIONS ── */
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
 }
 
+.btn-generate {
+  padding: 10px 22px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background 0.12s;
+}
+
+.btn-generate:hover:not(:disabled) { background: var(--blue-dark); }
+
+.btn-generate:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-sample {
+  background: none;
+  border: none;
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font);
+  padding: 0;
+  transition: opacity 0.12s;
+}
+
+.btn-sample:hover { opacity: 0.75; }
+
 /* ── LOADING ── */
-.loading-wrap {
-  text-align: center;
-  padding: 5rem 0;
+.loading-inline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  max-width: 680px;
+  margin-bottom: 1.5rem;
+  font-size: 14px;
+  color: var(--ink-2);
 }
 
 .spinner {
-  width: 36px; height: 36px;
+  width: 20px;
+  height: 20px;
   border: 2px solid var(--border);
-  border-top-color: var(--accent);
+  border-top-color: var(--blue);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  margin: 0 auto 1.5rem;
+  flex-shrink: 0;
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.loading-h {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 400;
-  color: var(--ink);
-  margin-bottom: 0.4rem;
-}
-
-.loading-sub { font-size: 14px; color: var(--ink-2); }
-
 /* ── RESULTS ── */
-.results-school {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--ink-3);
-  margin-bottom: 0.3rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .results-header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
-.results-h {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 400;
+.results-title {
+  font-size: 15px;
+  font-weight: 600;
   color: var(--ink);
 }
 
-.copy-btn {
+.results-copy-btn {
   font-size: 12px;
   font-weight: 500;
   color: var(--ink-3);
   background: none;
   border: none;
-  font-family: var(--font-ui);
+  font-family: var(--font);
   cursor: pointer;
   padding: 0;
-  white-space: nowrap;
   transition: color 0.12s;
-  flex-shrink: 0;
 }
 
-.copy-btn:hover { color: var(--ink-2); }
+.results-copy-btn:hover { color: var(--ink-2); }
 
-.results-meta {
+.results-meta-line {
   font-size: 13px;
   color: var(--ink-3);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.875rem;
 }
 
 /* Filter chips */
@@ -448,14 +364,14 @@ footer {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .filter-chip {
-  padding: 6px 13px;
+  padding: 5px 12px;
   border-radius: 999px;
   border: 1px solid var(--border);
-  font-family: var(--font-ui);
+  font-family: var(--font);
   font-size: 12px;
   font-weight: 500;
   color: var(--ink-2);
@@ -468,370 +384,276 @@ footer {
   gap: 5px;
 }
 
-.filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+.filter-chip:hover { border-color: var(--blue); color: var(--blue); }
 
-.filter-chip.on {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-bg);
-}
+.filter-chip.on { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
 
-.filter-count {
-  font-size: 11px;
-  font-weight: 400;
-  opacity: 0.7;
-}
+.filter-count { font-size: 11px; opacity: 0.65; }
 
 .results-showing {
   font-size: 12px;
   color: var(--ink-3);
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
-/* Opportunity cards */
+/* Cards grid */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
 .opp-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.125rem 1.25rem;
-  margin-bottom: 0.625rem;
-  transition: border-color 0.12s;
-}
-
-.opp-card:hover { border-color: var(--ink-3); }
-
-.opp-type {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-bottom: 0.35rem;
-}
-
-.opp-top {
+  border-radius: 12px;
+  padding: 1.25rem;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 0.6rem;
+  flex-direction: column;
+  transition: border-color 0.12s, box-shadow 0.12s;
 }
 
-.opp-name {
-  font-size: 15px;
+.opp-card:hover {
+  border-color: var(--blue-border);
+  box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+}
+
+.opp-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.opp-card-name {
+  font-size: 14px;
   font-weight: 600;
   color: var(--ink);
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
-.diff-badge {
+.uni-badge {
   font-size: 11px;
   font-weight: 500;
-  padding: 3px 9px;
+  padding: 3px 8px;
+  background: var(--blue-light);
+  color: var(--blue);
   border-radius: 4px;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
-.d-open { background: #EDFCF2; color: #1A6B3A; }
-.d-low  { background: var(--accent-bg); color: var(--accent); }
-.d-mod  { background: #FEF6E4; color: #92600A; }
-.d-comp { background: #FEF0EB; color: #B8471B; }
-.d-high { background: #FEECEC; color: #A82828; }
+.card-section { margin-bottom: 0.625rem; }
 
-.opp-overview {
+.card-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 0.2rem;
+}
+
+.card-value {
   font-size: 13px;
   color: var(--ink-2);
-  line-height: 1.65;
-  margin-bottom: 0.75rem;
+  line-height: 1.6;
 }
 
-.opp-notes {
-  font-size: 12px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border-radius: 6px;
-  padding: 8px 12px;
-  margin-bottom: 0.75rem;
-  line-height: 1.55;
+.diff-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid;
 }
 
-.opp-footer {
+.d-open { border-color: #16A34A; color: #16A34A; background: #F0FDF4; }
+.d-low  { border-color: #94A3B8; color: #64748B; background: #F8FAFC; }
+.d-mod  { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.d-comp { border-color: #EA580C; color: #EA580C; background: #FFF7ED; }
+.d-high { border-color: #DC2626; color: #DC2626; background: #FEF2F2; }
+
+.card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
   padding-top: 0.75rem;
   border-top: 1px solid var(--border);
+  margin-top: auto;
 }
-
-.opp-deadline {
-  font-size: 12px;
-  color: var(--ink-2);
-}
-
-.opp-deadline strong { color: var(--ink); font-weight: 500; }
 
 .opp-link {
   font-size: 13px;
   font-weight: 500;
-  color: var(--accent);
+  color: var(--blue);
   text-decoration: none;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: color 0.12s;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: opacity 0.12s;
 }
 
-.opp-link:hover { color: var(--accent-hover); }
+.opp-link:hover { opacity: 0.75; }
 
-.disclaimer {
-  font-size: 12px;
-  color: var(--ink-3);
-  line-height: 1.65;
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-
-.start-over {
-  display: block;
-  text-align: center;
-  margin-top: 1.25rem;
-  font-size: 13px;
-  color: var(--ink-3);
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-family: var(--font-ui);
-  text-decoration: underline;
-}
-
-.start-over:hover { color: var(--ink-2); }
-
+/* ── ERROR ── */
 .error-box {
-  background: #FEECEC;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
   border-radius: var(--radius);
   padding: 1rem 1.25rem;
   font-size: 13px;
-  color: #7A1E1E;
+  color: #991B1B;
   line-height: 1.6;
-  margin-bottom: 1rem;
+  max-width: 680px;
+  margin-bottom: 1.5rem;
+}
+
+/* ── MVP NOTE ── */
+.mvp-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-top: 2rem;
+  max-width: 680px;
+  line-height: 1.6;
 }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 820px) {
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    padding: 3rem 1.5rem 3.5rem;
-    gap: 2.5rem;
-  }
+@media (max-width: 900px) {
+  .results-grid { grid-template-columns: repeat(2, 1fr); }
+}
 
-  .hero-sub { max-width: none; }
-
-  .steps { grid-template-columns: 1fr; gap: 1.5rem; }
-
-  nav { padding: 0 1.5rem; }
-
-  .how { padding: 3rem 1.5rem; }
-
-  .flow-page { padding-left: 1.5rem; padding-right: 1.5rem; }
+@media (max-width: 680px) {
+  .sidebar { display: none; }
+  .main { padding: 1.5rem 1rem 3rem; }
+  .results-grid { grid-template-columns: 1fr; }
 }
 
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <span class="nav-logo" onclick="goHome()">Create<em>YourNextFour</em></span>
-</nav>
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">CreateYourNextFour</div>
+  <nav class="nav-section">
 
-<!-- ══ HOME ══ -->
-<div id="page-home">
-
-  <section class="hero">
-
-    <div class="hero-left">
-      <div class="hero-eyebrow">Texas universities · Class of 2029</div>
-      <h1 class="hero-h1">Don't leave your four years to chance.</h1>
-      <p class="hero-sub">Discover research programs, honors tracks, and leadership opportunities at Texas's top universities — matched to your major and interests, before deadlines pass you by.</p>
+    <div class="nav-item active">
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+      Home
     </div>
 
-    <div class="picker">
-      <div class="picker-label">Which school are you exploring?</div>
-      <ul class="uni-list">
-        <li class="uni-item" data-val="UT Austin" onclick="selectUni(this)">
-          <div class="uni-radio"></div>
-          <div>
-            <div class="uni-name">UT Austin</div>
-            <div class="uni-loc">The University of Texas · Austin</div>
-          </div>
-        </li>
-        <li class="uni-item" data-val="Texas A&M University" onclick="selectUni(this)">
-          <div class="uni-radio"></div>
-          <div>
-            <div class="uni-name">Texas A&amp;M University</div>
-            <div class="uni-loc">College Station, TX</div>
-          </div>
-        </li>
-        <li class="uni-item" data-val="Texas Tech University" onclick="selectUni(this)">
-          <div class="uni-radio"></div>
-          <div>
-            <div class="uni-name">Texas Tech University</div>
-            <div class="uni-loc">Lubbock, TX</div>
-          </div>
-        </li>
-      </ul>
-      <button class="btn-primary" id="btn-start" disabled onclick="startFromHome()">Find my opportunities →</button>
+    <div class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      Explore Opportunities
     </div>
 
-  </section>
+    <div class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      My Universities
+    </div>
 
-  <div class="how">
-    <div class="how-inner">
-      <div class="how-label">How it works</div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-title">Choose your school</div>
-          <div class="step-desc">Pick from UT Austin, Texas A&amp;M, or Texas Tech. Every recommendation is drawn from real programs at that specific campus.</div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-title">Share your direction</div>
-          <div class="step-desc">Tell us your intended major and what you want from college — research, leadership, entrepreneurship, and more.</div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-title">Get your opportunity cards</div>
-          <div class="step-desc">Matched programs with deadlines, competition levels, and direct links — so you can act before the window closes.</div>
-        </div>
+    <div class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
+      Roadmap
+    </div>
+
+    <div class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      Settings
+    </div>
+
+  </nav>
+</aside>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <div class="page-header">
+    <h1>Find hidden opportunities faster</h1>
+    <p>Tell us your university, major, and interests — we'll surface opportunities worth your time.</p>
+  </div>
+
+  <!-- Form -->
+  <div class="form-card">
+    <div class="form-card-title">Start your search</div>
+
+    <div class="field">
+      <label class="field-label">University</label>
+      <div class="select-wrap">
+        <select id="uni-select" onchange="checkForm()">
+          <option value="">Select a university…</option>
+          <option value="UT Austin">UT Austin</option>
+          <option value="Texas A&M University">Texas A&amp;M University</option>
+          <option value="Texas Tech University">Texas Tech University</option>
+        </select>
       </div>
     </div>
+
+    <div class="field">
+      <label class="field-label">Major</label>
+      <input type="text" id="major-input" placeholder="e.g. Computer Science, Biology, Business…" oninput="checkForm()">
+    </div>
+
+    <div class="field">
+      <label class="field-label">Interests</label>
+      <div class="interests-selected" id="interests-selected">
+        <span class="interests-placeholder" id="interests-placeholder">Select interests…</span>
+      </div>
+      <div class="interests-options" id="interests-options"></div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-generate" id="btn-generate" disabled onclick="generateResults()">Generate opportunities</button>
+      <button class="btn-sample" onclick="useSampleProfile()">Use sample profile</button>
+    </div>
   </div>
 
-  <footer>
-    CreateYourNextFour · Built for Texas students · Not affiliated with any university
-  </footer>
-
-</div>
-
-<!-- ══ STEP 2: MAJOR ══ -->
-<div id="page-major" class="flow-page">
-  <button class="flow-back" onclick="goHome()">← Back</button>
-  <div class="progress-track"><div class="progress-fill" style="width:33%"></div></div>
-  <div class="flow-step-label">Step 2 of 3</div>
-  <h2 class="flow-h">What are you planning to study?</h2>
-  <p class="flow-sub">Enter your intended major — or a broad subject area if you're still deciding.</p>
-  <input class="flow-input" id="major-input" type="text" placeholder="e.g. Computer Science, Biology, Business…" oninput="checkMajor()">
-  <button class="btn-primary" id="btn-major" disabled onclick="goToInterests()">Continue →</button>
-</div>
-
-<!-- ══ STEP 3: INTERESTS ══ -->
-<div id="page-interests" class="flow-page">
-  <button class="flow-back" onclick="showPage('page-major')">← Back</button>
-  <div class="progress-track"><div class="progress-fill" style="width:66%"></div></div>
-  <div class="flow-step-label">Step 3 of 3</div>
-  <h2 class="flow-h">What do you want to get out of college?</h2>
-  <p class="flow-sub">Select everything that excites you.</p>
-  <div class="chips-row" id="interest-chips">
-    <div class="chip" data-val="Research">Research</div>
-    <div class="chip" data-val="Entrepreneurship">Entrepreneurship</div>
-    <div class="chip" data-val="Leadership">Leadership</div>
-    <div class="chip" data-val="Honors Programs">Honors Programs</div>
-    <div class="chip" data-val="Internships">Internships</div>
-    <div class="chip" data-val="Study Abroad">Study Abroad</div>
-    <div class="chip" data-val="Service">Service</div>
-    <div class="chip" data-val="Clubs &amp; Organizations">Clubs &amp; Orgs</div>
-    <div class="chip" data-val="Competitions">Competitions</div>
+  <!-- Loading -->
+  <div id="loading-section" style="display:none">
+    <div class="loading-inline">
+      <div class="spinner"></div>
+      Finding your opportunities — this takes about 10 seconds…
+    </div>
   </div>
-  <button class="btn-primary" id="btn-interests" disabled onclick="generateResults()">Find my opportunities →</button>
-</div>
 
-<!-- ══ LOADING ══ -->
-<div id="page-loading" class="flow-page">
-  <div class="loading-wrap">
-    <div class="spinner"></div>
-    <div class="loading-h">Finding your opportunities</div>
-    <p class="loading-sub">This takes about 10 seconds…</p>
-  </div>
-</div>
+  <!-- Error -->
+  <div id="error-section" style="display:none"></div>
 
-<!-- ══ RESULTS ══ -->
-<div id="page-results" class="flow-page">
-  <button class="flow-back" onclick="goHome()">← Start over</button>
-  <div class="results-school" id="results-school"></div>
-  <div class="results-header">
-    <h2 class="results-h">Your opportunities</h2>
-    <button class="copy-btn" id="copy-btn" onclick="copyList()">Copy list</button>
+  <!-- Results -->
+  <div id="results-section" style="display:none">
+    <div class="results-header">
+      <div class="results-title" id="results-title"></div>
+      <button class="results-copy-btn" id="copy-btn" onclick="copyList()">Copy list</button>
+    </div>
+    <div class="results-meta-line" id="results-meta"></div>
+    <div class="filter-row" id="filter-row"></div>
+    <div class="results-showing" id="results-showing"></div>
+    <div class="results-grid" id="results-grid"></div>
   </div>
-  <div class="results-meta" id="results-meta"></div>
-  <div class="filter-row" id="filter-row"></div>
-  <div class="results-showing" id="results-showing"></div>
-  <div id="results-list"></div>
-  <div id="error-area"></div>
-  <p class="disclaimer">Program details are AI-generated based on known university offerings. Deadlines and requirements change — always verify directly with the program before applying.</p>
-  <button class="start-over" onclick="goHome()">Start over with a different school</button>
-</div>
+
+  <div class="mvp-note">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    MVP note: recommendations are based on public university pages and student-facing program descriptions. Always verify details directly with the program.
+  </div>
+
+</main>
 
 <script>
-  var selectedUni = '', selectedMajor = '', selectedInterests = [];
-  var allOpps = [], activeTypeFilter = null;
+  var selectedInterests = [];
+  var allOpps = [];
+  var activeTypeFilter = null;
+  var currentUni = '';
 
-  function showPage(id) {
-    document.getElementById('page-home').style.display = (id === 'page-home') ? '' : 'none';
-    ['page-major','page-interests','page-loading','page-results'].forEach(function(p) {
-      document.getElementById(p).classList.toggle('active', p === id);
-    });
-    window.scrollTo(0, 0);
-  }
-
-  function goHome() {
-    selectedUni = ''; selectedMajor = ''; selectedInterests = [];
-    document.querySelectorAll('.uni-item').forEach(function(o) { o.classList.remove('selected'); });
-    document.getElementById('btn-start').disabled = true;
-    document.getElementById('major-input').value = '';
-    document.getElementById('btn-major').disabled = true;
-    document.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('on'); });
-    document.getElementById('btn-interests').disabled = true;
-    document.getElementById('results-list').innerHTML = '';
-    document.getElementById('error-area').innerHTML = '';
-    showPage('page-home');
-  }
-
-  function selectUni(el) {
-    document.querySelectorAll('.uni-item').forEach(function(o) { o.classList.remove('selected'); });
-    el.classList.add('selected');
-    selectedUni = el.getAttribute('data-val');
-    document.getElementById('btn-start').disabled = false;
-  }
-
-  function startFromHome() {
-    if (!selectedUni) return;
-    showPage('page-major');
-  }
-
-  function checkMajor() {
-    selectedMajor = document.getElementById('major-input').value.trim();
-    document.getElementById('btn-major').disabled = !selectedMajor;
-  }
-
-  function goToInterests() {
-    selectedMajor = document.getElementById('major-input').value.trim();
-    if (!selectedMajor) return;
-    showPage('page-interests');
-    document.querySelectorAll('#interest-chips .chip').forEach(function(chip) {
-      chip.onclick = function() {
-        chip.classList.toggle('on');
-        selectedInterests = [];
-        document.querySelectorAll('#interest-chips .chip.on').forEach(function(c) {
-          selectedInterests.push(c.getAttribute('data-val'));
-        });
-        document.getElementById('btn-interests').disabled = (selectedInterests.length === 0);
-      };
-    });
-  }
+  var INTEREST_OPTIONS = [
+    'Research', 'Entrepreneurship', 'Leadership', 'Honors Programs',
+    'Internships', 'Study Abroad', 'Service', 'Clubs & Organizations', 'Competitions'
+  ];
 
   function esc(s) {
     return String(s)
@@ -847,20 +669,58 @@ footer {
     return 'd-high';
   }
 
-  function renderCard(o) {
-    return '<div class="opp-card">'
-      + (o.type ? '<div class="opp-type">' + esc(o.type) + '</div>' : '')
-      + '<div class="opp-top"><div class="opp-name">' + esc(o.name) + '</div>'
-      + '<span class="diff-badge ' + diffClass(o.difficulty) + '">' + esc(o.difficulty) + '</span></div>'
-      + '<div class="opp-overview">' + esc(o.overview) + '</div>'
-      + (o.notes ? '<div class="opp-notes">' + esc(o.notes) + '</div>' : '')
-      + '<div class="opp-footer">'
-      + '<div class="opp-deadline">Deadline: <strong>' + esc(o.deadline) + '</strong></div>'
-      + '<a class="opp-link" href="' + esc(o.url) + '" target="_blank" rel="noopener">Learn more →</a>'
-      + '</div>'
-      + '</div>';
+  /* ── Interests ── */
+  function renderInterests() {
+    var box = document.getElementById('interests-selected');
+    var placeholder = document.getElementById('interests-placeholder');
+    var optionsEl = document.getElementById('interests-options');
+
+    // selected chips
+    var chips = selectedInterests.map(function(i) {
+      return '<span class="sel-chip">' + esc(i)
+        + '<button class="sel-chip-remove" onclick="removeInterest(\'' + i.replace(/'/g, "\\'") + '\')">×</button>'
+        + '</span>';
+    }).join('');
+
+    // remove old chips (keep placeholder)
+    Array.from(box.querySelectorAll('.sel-chip')).forEach(function(el) { el.remove(); });
+    box.insertAdjacentHTML('afterbegin', chips);
+    placeholder.style.display = selectedInterests.length > 0 ? 'none' : '';
+
+    // available options
+    var available = INTEREST_OPTIONS.filter(function(i) {
+      return selectedInterests.indexOf(i) === -1;
+    });
+    optionsEl.innerHTML = available.map(function(i) {
+      return '<div class="int-option" onclick="addInterest(\'' + i.replace(/'/g, "\\'") + '\')">' + esc(i) + '</div>';
+    }).join('');
+
+    checkForm();
   }
 
+  function addInterest(i) {
+    if (selectedInterests.indexOf(i) === -1) { selectedInterests.push(i); renderInterests(); }
+  }
+
+  function removeInterest(i) {
+    selectedInterests = selectedInterests.filter(function(x) { return x !== i; });
+    renderInterests();
+  }
+
+  function checkForm() {
+    var uni = document.getElementById('uni-select').value;
+    var major = document.getElementById('major-input').value.trim();
+    document.getElementById('btn-generate').disabled = !(uni && major && selectedInterests.length > 0);
+  }
+
+  function useSampleProfile() {
+    document.getElementById('uni-select').value = 'UT Austin';
+    document.getElementById('major-input').value = 'Computer Science';
+    selectedInterests = ['Research', 'Entrepreneurship'];
+    renderInterests();
+  }
+
+  /* ── Filters ── */
   function buildFilters(opps) {
     var counts = {};
     opps.forEach(function(o) { if (o.type) counts[o.type] = (counts[o.type] || 0) + 1; });
@@ -879,34 +739,75 @@ footer {
     document.querySelectorAll('.filter-chip').forEach(function(c) {
       c.classList.toggle('on', c.getAttribute('data-type') === (type || ''));
     });
-    renderFilteredList();
+    renderFilteredGrid();
   }
 
-  function renderFilteredList() {
+  function renderFilteredGrid() {
     var filtered = activeTypeFilter ? allOpps.filter(function(o) { return o.type === activeTypeFilter; }) : allOpps;
     var showing = document.getElementById('results-showing');
-    showing.textContent = activeTypeFilter
-      ? 'Showing ' + filtered.length + ' of ' + allOpps.length
-      : '';
-    document.getElementById('results-list').innerHTML = filtered.map(renderCard).join('');
+    showing.textContent = activeTypeFilter ? 'Showing ' + filtered.length + ' of ' + allOpps.length : '';
+    document.getElementById('results-grid').innerHTML = filtered.map(function(o) { return renderCard(o); }).join('');
   }
 
-  function renderResults(opps) {
-    allOpps = opps;
-    activeTypeFilter = null;
-    document.getElementById('results-school').textContent = selectedUni;
-    document.getElementById('results-meta').textContent =
-      selectedMajor + ' · ' + selectedInterests.slice(0, 3).join(', ') + (selectedInterests.length > 3 ? ' + more' : '');
-    document.getElementById('copy-btn').textContent = 'Copy list';
-    buildFilters(opps);
-    renderFilteredList();
-    document.getElementById('error-area').innerHTML = '';
-    showPage('page-results');
+  function renderCard(o) {
+    return '<div class="opp-card">'
+      + '<div class="opp-card-top">'
+      + '<div class="opp-card-name">' + esc(o.name) + '</div>'
+      + '<span class="uni-badge">' + esc(currentUni) + '</span>'
+      + '</div>'
+      + '<div class="card-section"><div class="card-label">Overview</div><div class="card-value">' + esc(o.overview) + '</div></div>'
+      + '<div class="card-section"><div class="card-label">Deadline</div><div class="card-value">' + esc(o.deadline) + '</div></div>'
+      + (o.notes ? '<div class="card-section"><div class="card-label">Special Notes</div><div class="card-value">' + esc(o.notes) + '</div></div>' : '')
+      + '<div class="card-section"><div class="card-label">Difficulty</div><div class="card-value"><span class="diff-badge ' + diffClass(o.difficulty) + '">' + esc(o.difficulty) + '</span></div></div>'
+      + '<div class="card-footer"><div class="card-label">Official Link</div><a class="opp-link" href="' + esc(o.url) + '" target="_blank" rel="noopener">Visit official page →</a></div>'
+      + '</div>';
+  }
+
+  /* ── Generate ── */
+  async function generateResults() {
+    var university = document.getElementById('uni-select').value;
+    var major = document.getElementById('major-input').value.trim();
+    if (!university || !major || selectedInterests.length === 0) return;
+
+    currentUni = university;
+    document.getElementById('results-section').style.display = 'none';
+    document.getElementById('error-section').style.display = 'none';
+    document.getElementById('loading-section').style.display = 'block';
+
+    try {
+      var res = await fetch('/api/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ university: university, major: major, interests: selectedInterests })
+      });
+      var data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      allOpps = data.opportunities;
+      activeTypeFilter = null;
+
+      document.getElementById('results-title').textContent = allOpps.length + ' opportunities found';
+      document.getElementById('results-meta').textContent = major + ' · ' + selectedInterests.slice(0,3).join(', ') + (selectedInterests.length > 3 ? ' + more' : '');
+      document.getElementById('copy-btn').textContent = 'Copy list';
+
+      buildFilters(allOpps);
+      renderFilteredGrid();
+
+      document.getElementById('results-section').style.display = 'block';
+      document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    } catch(err) {
+      var errEl = document.getElementById('error-section');
+      errEl.innerHTML = '<div class="error-box"><strong>Something went wrong</strong><br>' + esc(err.message) + '</div>';
+      errEl.style.display = 'block';
+    } finally {
+      document.getElementById('loading-section').style.display = 'none';
+    }
   }
 
   function copyList() {
     var text = allOpps.map(function(o, i) {
-      return (i + 1) + '. ' + o.name + (o.type ? ' (' + o.type + ')' : '')
+      return (i+1) + '. ' + o.name + (o.type ? ' (' + o.type + ')' : '')
         + '\n   Deadline: ' + o.deadline
         + '\n   ' + o.url;
     }).join('\n\n');
@@ -917,27 +818,8 @@ footer {
     });
   }
 
-  async function generateResults() {
-    if (selectedInterests.length === 0) return;
-    showPage('page-loading');
-    try {
-      var res = await fetch('/api/recommend', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ university: selectedUni, major: selectedMajor, interests: selectedInterests })
-      });
-      var data = await res.json();
-      if (data.error) throw new Error(data.error);
-      renderResults(data.opportunities);
-    } catch (err) {
-      showPage('page-results');
-      document.getElementById('results-school').textContent = '';
-      document.getElementById('results-meta').textContent = '';
-      document.getElementById('results-list').innerHTML = '';
-      document.getElementById('error-area').innerHTML =
-        '<div class="error-box"><strong>Something went wrong</strong><br>' + esc(err.message) + '</div>';
-    }
-  }
+  // init
+  renderInterests();
 </script>
 </body>
 </html>
