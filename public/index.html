@@ -1394,11 +1394,11 @@ body {
 
   async function saveSearch(university, major, interests, opportunities) {
     if (!supabaseClient || !currentUser) return;
-    supabaseClient.from('profiles').upsert({
+    await supabaseClient.from('profiles').upsert({
       id: currentUser.id, university: university, major: major,
       interests: interests, updated_at: new Date().toISOString()
     });
-    supabaseClient.from('searches').insert({
+    await supabaseClient.from('searches').insert({
       user_id: currentUser.id, university: university, major: major,
       interests: interests, opportunities: opportunities
     });
