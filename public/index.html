@@ -2106,7 +2106,7 @@ body {
       + (o.notes ? '<div class="explore-detail-section"><div class="explore-detail-label">Special Notes</div><div class="explore-detail-value">' + esc(o.notes) + '</div></div>' : '')
       + '<div class="explore-detail-section"><div class="explore-detail-label">Difficulty</div><div class="explore-detail-value"><span class="diff-badge ' + diffClass(o.difficulty) + '">' + esc(o.difficulty) + '</span></div></div>'
       + '<div class="explore-detail-actions">'
-      + '<a class="btn-detail-primary" href="' + esc(o.url) + '" target="_blank" rel="noopener">Visit official page →</a>'
+      + '<a class="btn-detail-primary" href="' + searchUrl(o, 'explore') + '" target="_blank" rel="noopener">Visit official page →</a>'
       + saveBtn
       + '</div>';
   }
@@ -2386,6 +2386,11 @@ body {
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
+  function searchUrl(o, src) {
+    var uni = src === 'explore' ? (o.university || 'Texas university') : currentUni;
+    return 'https://www.google.com/search?q=' + encodeURIComponent(o.name + ' ' + uni);
+  }
+
   function diffClass(d) {
     if (d === 'Open Enrollment') return 'd-open';
     if (d === 'Low Competition') return 'd-low';
@@ -2491,7 +2496,7 @@ body {
       + '<div class="card-section"><div class="card-label">Deadline</div><div class="card-value">' + esc(o.deadline) + '</div></div>'
       + (o.notes ? '<div class="card-section"><div class="card-label">Special Notes</div><div class="card-value">' + esc(o.notes) + '</div></div>' : '')
       + '<div class="card-section"><div class="card-label">Difficulty</div><div class="card-value"><span class="diff-badge ' + diffClass(o.difficulty) + '">' + esc(o.difficulty) + '</span></div></div>'
-      + '<div class="card-footer"><a class="opp-link" href="' + esc(o.url) + '" target="_blank" rel="noopener">Visit official page →</a>' + saveBtn + '</div>'
+      + '<div class="card-footer"><a class="opp-link" href="' + searchUrl(o, src) + '" target="_blank" rel="noopener">Visit official page →</a>' + saveBtn + '</div>'
       + '</div>';
   }
 
