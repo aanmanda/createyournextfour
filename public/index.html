@@ -55,11 +55,11 @@ body {
 }
 
 .sidebar-logo {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
-  color: var(--blue);
+  color: var(--ink);
   padding: 1.75rem 1.5rem 2rem;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .nav-section { flex: 1; }
@@ -1650,6 +1650,9 @@ body {
     <div class="filter-row" id="filter-row"></div>
     <div class="results-showing" id="results-showing"></div>
     <div class="results-grid" id="results-grid"></div>
+    <div id="gen-more-wrap" style="display:none;margin-top:1rem">
+      <button class="btn-sample" id="btn-gen-more" onclick="generateMore()">+ Generate more opportunities</button>
+    </div>
   </div>
 
   <div class="mvp-note">
@@ -1713,6 +1716,9 @@ body {
           <div class="explore-type-filters" id="explore-filter-row"></div>
         </div>
         <div id="explore-results-grid"></div>
+        <div id="explore-gen-more-wrap" style="display:none;padding:1rem 1.25rem;border-top:1px solid var(--border)">
+          <button class="btn-sample" id="btn-explore-gen-more" onclick="generateMoreExplore()">+ Generate more opportunities</button>
+        </div>
       </div>
       <!-- Right: detail -->
       <div class="explore-detail-card" id="explore-detail-panel">
@@ -2024,6 +2030,7 @@ body {
       buildExploreFilters(exploreOpps);
       renderExploreGrid();
       document.getElementById('explore-results').style.display = 'block';
+      document.getElementById('explore-gen-more-wrap').style.display = 'block';
     } catch(err) {
       var errEl = document.getElementById('explore-error');
       errEl.innerHTML = '<div class="error-box"><strong>Something went wrong</strong><br>' + esc(err.message) + '</div>';
@@ -2533,6 +2540,7 @@ body {
       renderFilteredGrid();
 
       document.getElementById('results-section').style.display = 'block';
+      document.getElementById('gen-more-wrap').style.display = 'block';
       document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     } catch(err) {
@@ -2541,6 +2549,62 @@ body {
       errEl.style.display = 'block';
     } finally {
       document.getElementById('loading-section').style.display = 'none';
+    }
+  }
+
+  async function generateMore() {
+    var btn = document.getElementById('btn-gen-more');
+    btn.textContent = 'Finding more…';
+    btn.disabled = true;
+    try {
+      var res = await fetch('/api/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          university: currentUni, major: currentMajor, interests: selectedInterests,
+          exclude: allOpps.map(function(o) { return o.name; })
+        })
+      });
+      var data = await res.json();
+      if (data.error) throw new Error(data.error);
+      allOpps = allOpps.concat(data.opportunities);
+      document.getElementById('results-title').textContent = allOpps.length + ' opportunities found';
+      buildFilters(allOpps);
+      renderFilteredGrid();
+    } catch(err) {
+      alert('Could not load more: ' + err.message);
+    } finally {
+      btn.textContent = '+ Generate more opportunities';
+      btn.disabled = false;
+    }
+  }
+
+  async function generateMoreExplore() {
+    var btn = document.getElementById('btn-explore-gen-more');
+    btn.textContent = 'Finding more…';
+    btn.disabled = true;
+    try {
+      var uniVal = document.getElementById('explore-uni-select').value;
+      var university = uniVal ? uniVal : 'UT Austin, Texas A&M University, and Texas Tech University';
+      var major = document.getElementById('explore-major').value.trim();
+      var res = await fetch('/api/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          university: university, major: major, interests: exploreInterests,
+          exclude: exploreOpps.map(function(o) { return o.name; })
+        })
+      });
+      var data = await res.json();
+      if (data.error) throw new Error(data.error);
+      exploreOpps = exploreOpps.concat(data.opportunities);
+      buildExploreFilters(exploreOpps);
+      renderExploreGrid();
+    } catch(err) {
+      alert('Could not load more: ' + err.message);
+    } finally {
+      btn.textContent = '+ Generate more opportunities';
+      btn.disabled = false;
     }
   }
 

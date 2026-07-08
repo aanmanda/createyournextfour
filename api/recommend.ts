@@ -9,6 +9,7 @@ const BodySchema = z.object({
   university: z.string().min(1),
   major: z.string().min(1),
   interests: z.array(z.string()).min(1),
+  exclude: z.array(z.string()).optional(),
 });
 
 const OpportunitySchema = z.object({
@@ -25,6 +26,7 @@ const OpportunitySchema = z.object({
     "Highly Competitive",
   ]),
   url: z.string(),
+  university: z.string().optional(),
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -37,14 +39,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Missing or invalid fields" });
   }
 
-  const { university, major, interests } = parsed.data;
+  const { university, major, interests, exclude } = parsed.data;
 
-  const prompt = `You are a college advisor. Generate 10-12 real, specific opportunity recommendations for this student:
+  const multiUni = university.includes(",");
+  const excludeClause =
+    exclude && exclude.length > 0
+      ? `\n\nDo NOT include any of these programs (already shown to the student): ${exclude.join(", ")}.`
+      : "";
+  const uniField = multiUni
+    ? `,\n  "university": "Which of the listed universities this program is at (exact name)"`
+    : "";
+
+  const prompt = `You are a college advisor. Generate exactly 6 real, specific opportunity recommendations for this student:
 - University: ${university}
 - Major: ${major}
 - Interests: ${interests.join(", ")}
 
-Include well-known AND lesser-known programs. Be specific — use real program names that actually exist at ${university}.
+Include well-known AND lesser-known programs. Be specific — use real program names that actually exist at ${university}.${excludeClause}
 
 Respond with ONLY a JSON array. No prose, no markdown fences, no explanation. Your entire response must start with [ and end with ].
 
@@ -56,13 +67,13 @@ Each item must have exactly these fields:
   "deadline": "e.g. February 1 or Rolling — apply early fall",
   "notes": "1-2 key notes e.g. Separate application required. Open to freshmen.",
   "difficulty": "Open Enrollment" or "Low Competition" or "Moderate Competition" or "Competitive" or "Highly Competitive",
-  "url": "Official program URL"
+  "url": "Official program URL"${uniField}
 }`;
 
   try {
     const message = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
-      max_tokens: 4096,
+      max_tokens: 2048,
       messages: [{ role: "user", content: prompt }],
     });
 
