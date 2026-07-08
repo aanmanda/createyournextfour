@@ -915,6 +915,108 @@ body {
 
 .btn-sidebar-signout:hover { color: var(--ink-2); }
 
+/* ── HISTORY ── */
+.history-empty {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  max-width: 480px;
+  color: var(--ink-3);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 680px;
+}
+
+.history-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+
+.history-card:hover {
+  border-color: var(--blue-border);
+  box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+}
+
+.history-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.history-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+.history-card-sub {
+  font-size: 13px;
+  color: var(--ink-2);
+  margin-bottom: 3px;
+}
+
+.history-card-date {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.history-card-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--blue-light);
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.history-opp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 0.875rem;
+  padding-top: 0.875rem;
+  border-top: 1px solid var(--border);
+}
+
+.history-opp-tag {
+  font-size: 12px;
+  color: var(--ink-2);
+  background: var(--bg);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.btn-load-results {
+  margin-top: 0.875rem;
+  padding: 8px 16px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background 0.12s;
+}
+
+.btn-load-results:hover { background: var(--blue-dark); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .results-grid { grid-template-columns: repeat(2, 1fr); }
@@ -953,6 +1055,11 @@ body {
     <div class="nav-item" data-view="roadmap" onclick="showView('roadmap')">
       <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
       Roadmap
+    </div>
+
+    <div class="nav-item" data-view="history" onclick="showView('history')">
+      <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      History
     </div>
 
     <div class="nav-item" data-view="settings">
@@ -1098,6 +1205,20 @@ body {
 
 </div><!-- end #roadmap-view -->
 
+<!-- ══ HISTORY VIEW ══ -->
+<div id="history-view" style="display:none">
+
+  <div class="page-header">
+    <h1>Search history</h1>
+    <p>Your past opportunity searches. Click any result to reload it.</p>
+  </div>
+
+  <div id="history-content">
+    <div class="history-empty">Loading…</div>
+  </div>
+
+</div><!-- end #history-view -->
+
 </main>
 
 <!-- ── AUTH MODAL ── -->
@@ -1159,6 +1280,7 @@ body {
         updateAuthUI();
         if (event === 'SIGNED_IN') {
           closeAuthModal();
+          loadProfile();
           if (pendingGenerate) {
             pendingGenerate = false;
             generateResults();
@@ -1254,6 +1376,97 @@ body {
 
   function signOut() {
     if (supabaseClient) supabaseClient.auth.signOut();
+  }
+
+  /* ── Profile + History ── */
+  var historyCache = [];
+
+  async function loadProfile() {
+    if (!supabaseClient || !currentUser) return;
+    var result = await supabaseClient.from('profiles').select().eq('id', currentUser.id).single();
+    if (result.data) {
+      var p = result.data;
+      if (p.university) document.getElementById('uni-select').value = p.university;
+      if (p.major) document.getElementById('major-input').value = p.major;
+      if (p.interests && p.interests.length > 0) { selectedInterests = p.interests; renderInterests(); }
+    }
+  }
+
+  async function saveSearch(university, major, interests, opportunities) {
+    if (!supabaseClient || !currentUser) return;
+    supabaseClient.from('profiles').upsert({
+      id: currentUser.id, university: university, major: major,
+      interests: interests, updated_at: new Date().toISOString()
+    });
+    supabaseClient.from('searches').insert({
+      user_id: currentUser.id, university: university, major: major,
+      interests: interests, opportunities: opportunities
+    });
+  }
+
+  async function refreshHistory() {
+    var el = document.getElementById('history-content');
+    if (!currentUser) {
+      el.innerHTML = '<div class="history-empty">Sign in to view your search history.</div>';
+      return;
+    }
+    if (!supabaseClient) {
+      el.innerHTML = '<div class="history-empty">History unavailable.</div>';
+      return;
+    }
+    var result = await supabaseClient.from('searches').select()
+      .eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(20);
+    historyCache = result.data || [];
+    renderHistoryList(historyCache);
+  }
+
+  function renderHistoryList(searches) {
+    var el = document.getElementById('history-content');
+    if (searches.length === 0) {
+      el.innerHTML = '<div class="history-empty">No searches yet — generate opportunities on the Home tab and they\'ll appear here.</div>';
+      return;
+    }
+    el.innerHTML = '<div class="history-list">' + searches.map(function(s, i) {
+      var d = new Date(s.created_at);
+      var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      var opps = s.opportunities || [];
+      return '<div class="history-card">'
+        + '<div class="history-card-header">'
+        + '<div>'
+        + '<div class="history-card-title">' + esc(s.university) + ' — ' + esc(s.major) + '</div>'
+        + '<div class="history-card-sub">' + esc((s.interests || []).join(', ')) + '</div>'
+        + '<div class="history-card-date">' + esc(dateStr) + '</div>'
+        + '</div>'
+        + '<div class="history-card-count">' + opps.length + ' opportunities</div>'
+        + '</div>'
+        + '<div class="history-opp-tags">'
+        + opps.slice(0, 6).map(function(o) { return '<span class="history-opp-tag">' + esc(o.name) + '</span>'; }).join('')
+        + (opps.length > 6 ? '<span class="history-opp-tag">+' + (opps.length - 6) + ' more</span>' : '')
+        + '</div>'
+        + '<button class="btn-load-results" onclick="loadHistorySearch(' + i + ')">Load results →</button>'
+        + '</div>';
+    }).join('') + '</div>';
+  }
+
+  function loadHistorySearch(index) {
+    var s = historyCache[index];
+    if (!s) return;
+    document.getElementById('uni-select').value = s.university;
+    document.getElementById('major-input').value = s.major;
+    selectedInterests = s.interests || [];
+    renderInterests();
+    currentUni = s.university;
+    currentMajor = s.major;
+    allOpps = s.opportunities || [];
+    activeTypeFilter = null;
+    document.getElementById('results-title').textContent = allOpps.length + ' opportunities found';
+    document.getElementById('results-meta').textContent = s.major + ' · ' + (s.interests || []).slice(0,3).join(', ') + (s.interests.length > 3 ? ' + more' : '');
+    document.getElementById('copy-btn').textContent = 'Copy list';
+    buildFilters(allOpps);
+    renderFilteredGrid();
+    document.getElementById('results-section').style.display = 'block';
+    showView('home');
+    setTimeout(function() { document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
   }
 
   var INTEREST_OPTIONS = [
@@ -1397,6 +1610,7 @@ body {
 
       allOpps = data.opportunities;
       activeTypeFilter = null;
+      saveSearch(university, major, selectedInterests, allOpps);
 
       document.getElementById('results-title').textContent = allOpps.length + ' opportunities found';
       document.getElementById('results-meta').textContent = major + ' · ' + selectedInterests.slice(0,3).join(', ') + (selectedInterests.length > 3 ? ' + more' : '');
@@ -1434,12 +1648,14 @@ body {
   function showView(view) {
     document.getElementById('home-view').style.display = view === 'home' ? '' : 'none';
     document.getElementById('roadmap-view').style.display = view === 'roadmap' ? '' : 'none';
+    document.getElementById('history-view').style.display = view === 'history' ? '' : 'none';
 
     document.querySelectorAll('.nav-item').forEach(function(el) {
       el.classList.toggle('active', el.getAttribute('data-view') === view);
     });
 
     if (view === 'roadmap') refreshRoadmapView();
+    if (view === 'history') refreshHistory();
     window.scrollTo(0, 0);
   }
 
