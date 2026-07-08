@@ -1690,6 +1690,14 @@ body {
     }
   }
 
+  async function saveRoadmapToHistory(university, major, interests, roadmap) {
+    if (!supabaseClient || !currentUser) return;
+    await supabaseClient.from('roadmaps').insert({
+      user_id: currentUser.id, university: university, major: major,
+      interests: interests, roadmap: roadmap
+    });
+  }
+
   async function saveSearch(university, major, interests, opportunities) {
     if (!supabaseClient || !currentUser) return;
     await supabaseClient.from('profiles').upsert({
@@ -1704,45 +1712,45 @@ body {
 
   async function refreshHistory() {
     var el = document.getElementById('history-content');
-    if (!currentUser) {
-      el.innerHTML = '<div class="history-empty">Sign in to view your search history.</div>';
-      return;
-    }
-    if (!supabaseClient) {
-      el.innerHTML = '<div class="history-empty">History unavailable.</div>';
-      return;
-    }
-    var result = await supabaseClient.from('searches').select()
-      .eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(20);
-    historyCache = result.data || [];
+    if (!currentUser) { el.innerHTML = '<div class="history-empty">Sign in to view your search history.</div>'; return; }
+    if (!supabaseClient) { el.innerHTML = '<div class="history-empty">History unavailable.</div>'; return; }
+    var searchRes = await supabaseClient.from('searches').select().eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(20);
+    var roadmapRes = await supabaseClient.from('roadmaps').select().eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(10);
+    var searches = (searchRes.data || []).map(function(s) { return Object.assign({}, s, { _type: 'search' }); });
+    var roadmaps = (roadmapRes.data || []).map(function(r) { return Object.assign({}, r, { _type: 'roadmap' }); });
+    historyCache = searches.concat(roadmaps).sort(function(a, b) { return new Date(b.created_at) - new Date(a.created_at); });
     renderHistoryList(historyCache);
   }
 
-  function renderHistoryList(searches) {
+  function renderHistoryList(items) {
     var el = document.getElementById('history-content');
-    if (searches.length === 0) {
-      el.innerHTML = '<div class="history-empty">No searches yet — generate opportunities on the Home tab and they\'ll appear here.</div>';
+    if (items.length === 0) {
+      el.innerHTML = '<div class="history-empty">No history yet — generate opportunities or a roadmap and they\'ll appear here.</div>';
       return;
     }
-    el.innerHTML = '<div class="history-list">' + searches.map(function(s, i) {
+    el.innerHTML = '<div class="history-list">' + items.map(function(s, i) {
       var d = new Date(s.created_at);
       var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      var opps = s.opportunities || [];
+      var isRoadmap = s._type === 'roadmap';
+      var badge = isRoadmap
+        ? '<div class="history-card-count" style="background:#F0FDF4;color:#16A34A;border:1px solid #BBF7D0">4-Year Roadmap</div>'
+        : '<div class="history-card-count">' + (s.opportunities || []).length + ' opportunities</div>';
+      var tags = isRoadmap
+        ? '<div class="history-opp-tags"><span class="history-opp-tag">Semester-by-semester plan</span><span class="history-opp-tag">8 semesters</span></div>'
+        : '<div class="history-opp-tags">'
+          + (s.opportunities || []).slice(0, 6).map(function(o) { return '<span class="history-opp-tag">' + esc(o.name) + '</span>'; }).join('')
+          + ((s.opportunities || []).length > 6 ? '<span class="history-opp-tag">+' + ((s.opportunities || []).length - 6) + ' more</span>' : '')
+          + '</div>';
+      var btn = isRoadmap
+        ? '<button class="btn-load-results" onclick="loadHistoryRoadmap(' + i + ')">Load roadmap →</button>'
+        : '<button class="btn-load-results" onclick="loadHistorySearch(' + i + ')">Load results →</button>';
       return '<div class="history-card">'
-        + '<div class="history-card-header">'
-        + '<div>'
+        + '<div class="history-card-header"><div>'
         + '<div class="history-card-title">' + esc(s.university) + ' — ' + esc(s.major) + '</div>'
         + '<div class="history-card-sub">' + esc((s.interests || []).join(', ')) + '</div>'
         + '<div class="history-card-date">' + esc(dateStr) + '</div>'
-        + '</div>'
-        + '<div class="history-card-count">' + opps.length + ' opportunities</div>'
-        + '</div>'
-        + '<div class="history-opp-tags">'
-        + opps.slice(0, 6).map(function(o) { return '<span class="history-opp-tag">' + esc(o.name) + '</span>'; }).join('')
-        + (opps.length > 6 ? '<span class="history-opp-tag">+' + (opps.length - 6) + ' more</span>' : '')
-        + '</div>'
-        + '<button class="btn-load-results" onclick="loadHistorySearch(' + i + ')">Load results →</button>'
-        + '</div>';
+        + '</div>' + badge + '</div>'
+        + tags + btn + '</div>';
     }).join('') + '</div>';
   }
 
@@ -1765,6 +1773,24 @@ body {
     document.getElementById('results-section').style.display = 'block';
     showView('home');
     setTimeout(function() { document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+  }
+
+  function loadHistoryRoadmap(index) {
+    var s = historyCache[index];
+    if (!s) return;
+    document.getElementById('uni-select').value = s.university;
+    document.getElementById('major-input').value = s.major;
+    selectedInterests = s.interests || [];
+    renderInterests();
+    currentUni = s.university;
+    currentMajor = s.major;
+    roadmapGenerated = true;
+    showView('roadmap');
+    refreshRoadmapView();
+    renderRoadmap(s.roadmap);
+    document.getElementById('roadmap-result').style.display = 'block';
+    document.getElementById('roadmap-error').style.display = 'none';
+    document.getElementById('roadmap-loading').style.display = 'none';
   }
 
   var INTEREST_OPTIONS = [
@@ -2008,6 +2034,7 @@ body {
       roadmapGenerated = true;
       renderRoadmap(data.roadmap);
       document.getElementById('roadmap-result').style.display = 'block';
+      saveRoadmapToHistory(currentUni, currentMajor, selectedInterests, data.roadmap);
     } catch(err) {
       var errEl = document.getElementById('roadmap-error');
       errEl.innerHTML = '<div class="error-box"><strong>Something went wrong</strong><br>' + esc(err.message) + '</div>';
