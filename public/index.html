@@ -6,7 +6,7 @@
 <title>CreateYourNextFour — Texas University Opportunity Finder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 
@@ -25,7 +25,7 @@
   --ink-2: #475569;
   --ink-3: #94A3B8;
   --border: #E2E8F0;
-  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --font: 'Inter', system-ui, sans-serif;
   --radius: 8px;
 }
 
@@ -42,13 +42,12 @@ body {
 
 /* ── SIDEBAR ── */
 .sidebar {
-  width: 240px;
-  min-width: 240px;
+  width: 260px;
+  min-width: 260px;
   background: var(--surface);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 0;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -56,11 +55,10 @@ body {
 }
 
 .sidebar-logo {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 800;
   color: var(--blue);
-  padding: 0 1.25rem;
-  margin-bottom: 2rem;
+  padding: 1.75rem 1.5rem 2rem;
   letter-spacing: -0.01em;
 }
 
@@ -69,23 +67,23 @@ body {
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 1.25rem;
+  gap: 11px;
+  padding: 11px 1.5rem;
   font-size: 14px;
   font-weight: 500;
   color: var(--ink-2);
   cursor: pointer;
   border-left: 3px solid transparent;
-  transition: all 0.12s;
+  transition: color 0.12s;
   user-select: none;
 }
 
-.nav-item:hover { background: var(--blue-light); color: var(--blue); }
+.nav-item:hover { color: var(--blue); }
 
 .nav-item.active {
-  background: var(--blue-light);
   color: var(--blue);
   border-left-color: var(--blue);
+  font-weight: 600;
 }
 
 .nav-icon {
@@ -110,14 +108,14 @@ body {
 .page-header { margin-bottom: 1.75rem; }
 
 .page-header h1 {
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 2.5rem;
+  font-weight: 800;
   color: var(--ink);
-  margin-bottom: 0.3rem;
-  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.03em;
 }
 
-.page-header p { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+.page-header p { font-size: 15px; color: var(--ink-2); line-height: 1.6; }
 
 /* ── FORM CARD ── */
 .form-card {
@@ -125,13 +123,11 @@ body {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 1.5rem;
-  max-width: 680px;
-  margin-bottom: 1.5rem;
 }
 
 .form-card-title {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   color: var(--ink);
   margin-bottom: 1.25rem;
 }
@@ -281,7 +277,6 @@ body {
 }
 
 .btn-generate:hover:not(:disabled) { background: var(--blue-dark); }
-
 .btn-generate:disabled { opacity: 0.45; cursor: not-allowed; }
 
 .btn-sample {
@@ -298,6 +293,58 @@ body {
 
 .btn-sample:hover { opacity: 0.75; }
 
+/* ── HOME TWO-PANEL TOP ── */
+.home-top-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  align-items: start;
+}
+
+.rec-preview-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.rec-preview-header {
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.rec-preview-empty {
+  padding: 1.25rem;
+  font-size: 14px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+.rec-preview-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.625rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.rec-preview-item:last-child { border-bottom: none; }
+
+.rec-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blue);
+  flex-shrink: 0;
+}
+
 /* ── LOADING ── */
 .loading-inline {
   display: flex;
@@ -307,7 +354,6 @@ body {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  max-width: 680px;
   margin-bottom: 1.5rem;
   font-size: 14px;
   color: var(--ink-2);
@@ -386,7 +432,6 @@ body {
 }
 
 .filter-chip:hover { border-color: var(--blue); color: var(--blue); }
-
 .filter-chip.on { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
 
 .filter-count { font-size: 11px; opacity: 0.65; }
@@ -508,7 +553,6 @@ body {
   font-size: 13px;
   color: #991B1B;
   line-height: 1.6;
-  max-width: 680px;
   margin-bottom: 1.5rem;
 }
 
@@ -520,7 +564,6 @@ body {
   font-size: 12px;
   color: var(--ink-3);
   margin-top: 2rem;
-  max-width: 680px;
   line-height: 1.6;
 }
 
@@ -637,9 +680,7 @@ body {
   padding: 1.125rem 1.25rem;
 }
 
-.semester-header {
-  margin-bottom: 0.75rem;
-}
+.semester-header { margin-bottom: 0.75rem; }
 
 .semester-label {
   font-size: 13px;
@@ -872,7 +913,7 @@ body {
 
 /* Sidebar auth */
 .sidebar-auth {
-  padding: 1rem 1.25rem;
+  padding: 1rem 1.5rem;
   border-top: 1px solid var(--border);
 }
 
@@ -922,87 +963,133 @@ body {
   border-radius: 12px;
   padding: 2.5rem 2rem;
   text-align: center;
-  max-width: 480px;
   color: var(--ink-3);
   font-size: 14px;
   line-height: 1.6;
 }
 
-.history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 680px;
+/* ── HISTORY TWO-PANEL ── */
+.history-two-panel {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.25rem;
+  align-items: start;
 }
 
-.history-card {
+.history-left-panel {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  transition: border-color 0.12s, box-shadow 0.12s;
-}
-
-.history-card:hover {
-  border-color: var(--blue-border);
-  box-shadow: 0 2px 12px rgba(37,99,235,0.08);
-}
-
-.history-card-header {
+  overflow: hidden;
+  max-height: calc(100vh - 220px);
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
 }
 
-.history-card-title {
-  font-size: 14px;
+.history-panel-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
   font-weight: 600;
   color: var(--ink);
-  margin-bottom: 3px;
-}
-
-.history-card-sub {
-  font-size: 13px;
-  color: var(--ink-2);
-  margin-bottom: 3px;
-}
-
-.history-card-date {
-  font-size: 12px;
-  color: var(--ink-3);
-}
-
-.history-card-count {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--blue);
-  background: var(--blue-light);
-  padding: 3px 10px;
-  border-radius: 999px;
-  white-space: nowrap;
   flex-shrink: 0;
 }
 
-.history-opp-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 0.875rem;
-  padding-top: 0.875rem;
-  border-top: 1px solid var(--border);
+.history-left-scroll {
+  overflow-y: auto;
+  flex: 1;
 }
 
-.history-opp-tag {
+.history-row {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.history-row:last-child { border-bottom: none; }
+.history-row:hover { background: var(--bg); }
+.history-row.active { border-left-color: var(--blue); background: var(--blue-light); }
+
+.history-row-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.history-row-interests {
   font-size: 12px;
   color: var(--ink-2);
-  background: var(--bg);
-  padding: 3px 10px;
-  border-radius: 4px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-row-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-row-date {
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.history-count-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--blue-light);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.history-roadmap-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #16A34A;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* History right panel */
+.history-right-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+}
+
+.history-detail-empty {
+  color: var(--ink-3);
+  font-size: 14px;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.history-detail-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.01em;
+}
+
+.history-detail-sub {
+  font-size: 13px;
+  color: var(--ink-2);
+  margin-bottom: 1rem;
 }
 
 .btn-load-results {
-  margin-top: 0.875rem;
   padding: 8px 16px;
   background: var(--blue);
   color: #fff;
@@ -1013,9 +1100,77 @@ body {
   cursor: pointer;
   font-family: var(--font);
   transition: background 0.12s;
+  margin-bottom: 1.25rem;
+  display: inline-block;
 }
 
 .btn-load-results:hover { background: var(--blue-dark); }
+
+.history-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.history-meta-cell {
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 0.625rem 0.875rem;
+}
+
+.history-meta-cell-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 2px;
+}
+
+.history-meta-cell-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.history-detail-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.625rem;
+  margin-top: 1rem;
+}
+
+.history-opp-bullet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 1rem;
+}
+
+.history-opp-bullet {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.history-opp-bullet::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ink-3);
+  flex-shrink: 0;
+}
+
+.history-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
 
 /* ── SAVE DEADLINE BUTTON ── */
 .btn-save-dl {
@@ -1037,47 +1192,91 @@ body {
 .btn-save-dl.saved { border-color: #16A34A; color: #16A34A; background: #F0FDF4; cursor: default; }
 
 /* ── DEADLINES ── */
-.deadlines-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-width: 680px;
+.deadlines-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-.deadline-card {
+.stat-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 1.125rem 1.5rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  transition: border-color 0.12s;
+  padding: 1rem 1.25rem;
 }
 
-.deadline-card:hover { border-color: var(--blue-border); }
-
-.deadline-info { flex: 1; min-width: 0; }
-
-.deadline-name {
-  font-size: 14px;
+.stat-card-label {
+  font-size: 11px;
   font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 3px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 0.35rem;
 }
 
-.deadline-meta {
+.stat-card-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+/* Deadlines table */
+.deadlines-table-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.deadlines-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.deadlines-table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.deadlines-table td {
+  padding: 0.875rem 1rem;
   font-size: 13px;
   color: var(--ink-2);
-  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
 }
 
-.deadline-date {
+.deadlines-table tr:last-child td { border-bottom: none; }
+
+.deadlines-table tr:hover td { background: var(--bg); }
+
+.dl-opp-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dl-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blue);
+  flex-shrink: 0;
+}
+
+.dl-opp-name {
   font-size: 13px;
-  font-weight: 500;
-  color: var(--blue);
-  margin-bottom: 4px;
+  font-weight: 600;
+  color: var(--ink);
 }
 
 .btn-remove-dl {
@@ -1095,15 +1294,231 @@ body {
 
 .btn-remove-dl:hover { color: #DC2626; background: #FEF2F2; }
 
+.deadlines-empty-state {
+  padding: 3rem 2rem;
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+/* ── EXPLORE VIEW ── */
+.explore-filter-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-bottom: 1.25rem;
+}
+
+.explore-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 160px;
+}
+
+.explore-filter-field .field-label { margin-bottom: 0; }
+
+.explore-filter-interests {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.explore-filter-btn { flex-shrink: 0; }
+
+.explore-two-panel {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.explore-list-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.explore-list-header {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.explore-list-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.explore-type-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.explore-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.explore-row:last-child { border-bottom: none; }
+.explore-row:hover { background: var(--bg); }
+.explore-row.active { background: var(--blue-light); }
+
+.explore-row-main { flex: 1; min-width: 0; }
+
+.explore-row-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+.explore-row-overview {
+  font-size: 13px;
+  color: var(--ink-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.explore-row-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.explore-row-deadline {
+  font-size: 12px;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+/* Explore detail panel */
+.explore-detail-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: sticky;
+  top: 1.5rem;
+}
+
+.explore-detail-empty {
+  font-size: 14px;
+  color: var(--ink-3);
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.explore-detail-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.explore-detail-section {
+  margin-bottom: 0.875rem;
+}
+
+.explore-detail-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 0.2rem;
+}
+
+.explore-detail-value {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+.explore-detail-actions {
+  display: flex;
+  gap: 0.625rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.btn-detail-primary {
+  padding: 9px 16px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  text-decoration: none;
+  transition: background 0.12s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-detail-primary:hover { background: var(--blue-dark); }
+
+.btn-detail-secondary {
+  padding: 9px 16px;
+  background: none;
+  color: var(--blue);
+  border: 1px solid var(--blue-border);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background 0.12s;
+}
+
+.btn-detail-secondary:hover { background: var(--blue-light); }
+
 /* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .home-top-grid { grid-template-columns: 1fr; }
+  .explore-two-panel { grid-template-columns: 1fr; }
+  .history-two-panel { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 900px) {
   .results-grid { grid-template-columns: repeat(2, 1fr); }
+  .deadlines-stats-row { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 680px) {
   .sidebar { display: none; }
   .main { padding: 1.5rem 1rem 3rem; }
   .results-grid { grid-template-columns: 1fr; }
+  .deadlines-stats-row { grid-template-columns: 1fr; }
 }
 
 </style>
@@ -1130,14 +1545,14 @@ body {
       Roadmap
     </div>
 
-    <div class="nav-item" data-view="history" onclick="showView('history')">
-      <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      History
-    </div>
-
     <div class="nav-item" data-view="deadlines" onclick="showView('deadlines')">
       <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       Deadline Tracker
+    </div>
+
+    <div class="nav-item" data-view="history" onclick="showView('history')">
+      <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      History
     </div>
 
     <div class="nav-item" data-view="settings">
@@ -1168,38 +1583,49 @@ body {
     <p>Tell us your university, major, and interests — we'll surface opportunities worth your time.</p>
   </div>
 
-  <!-- Form -->
-  <div class="form-card">
-    <div class="form-card-title">Start your search</div>
+  <!-- Two-panel top -->
+  <div class="home-top-grid">
+    <!-- Left: Form -->
+    <div class="form-card">
+      <div class="form-card-title">Start your search</div>
 
-    <div class="field">
-      <label class="field-label">University</label>
-      <div class="select-wrap">
-        <select id="uni-select" onchange="checkForm()">
-          <option value="">Select a university…</option>
-          <option value="UT Austin">UT Austin</option>
-          <option value="Texas A&M University">Texas A&amp;M University</option>
-          <option value="Texas Tech University">Texas Tech University</option>
-        </select>
+      <div class="field">
+        <label class="field-label">University</label>
+        <div class="select-wrap">
+          <select id="uni-select" onchange="checkForm()">
+            <option value="">Select a university…</option>
+            <option value="UT Austin">UT Austin</option>
+            <option value="Texas A&M University">Texas A&amp;M University</option>
+            <option value="Texas Tech University">Texas Tech University</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Major</label>
+        <input type="text" id="major-input" placeholder="e.g. Computer Science, Biology, Business…" oninput="checkForm()">
+      </div>
+
+      <div class="field">
+        <label class="field-label">Interests</label>
+        <div class="interests-selected" id="interests-selected">
+          <span class="interests-placeholder" id="interests-placeholder">Select interests…</span>
+        </div>
+        <div class="interests-options" id="interests-options"></div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-generate" id="btn-generate" disabled onclick="generateResults()">Generate opportunities</button>
+        <button class="btn-sample" onclick="useSampleProfile()">Use sample profile</button>
       </div>
     </div>
 
-    <div class="field">
-      <label class="field-label">Major</label>
-      <input type="text" id="major-input" placeholder="e.g. Computer Science, Biology, Business…" oninput="checkForm()">
-    </div>
-
-    <div class="field">
-      <label class="field-label">Interests</label>
-      <div class="interests-selected" id="interests-selected">
-        <span class="interests-placeholder" id="interests-placeholder">Select interests…</span>
+    <!-- Right: Preview panel -->
+    <div class="rec-preview-card">
+      <div class="rec-preview-header">Your first recommendations</div>
+      <div id="rec-preview-list">
+        <div class="rec-preview-empty">Generate opportunities to see your personalized recommendations.</div>
       </div>
-      <div class="interests-options" id="interests-options"></div>
-    </div>
-
-    <div class="form-actions">
-      <button class="btn-generate" id="btn-generate" disabled onclick="generateResults()">Generate opportunities</button>
-      <button class="btn-sample" onclick="useSampleProfile()">Use sample profile</button>
     </div>
   </div>
 
@@ -1232,6 +1658,70 @@ body {
   </div>
 
 </div><!-- end #home-view -->
+
+<!-- ══ EXPLORE VIEW ══ -->
+<div id="explore-view" style="display:none">
+
+  <div class="page-header">
+    <h1>Explore Opportunities</h1>
+    <p>Browse programs across all three universities by major and interest area.</p>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="explore-filter-bar">
+    <div class="explore-filter-field">
+      <label class="field-label">University</label>
+      <div class="select-wrap" style="min-width:180px">
+        <select id="explore-uni-select" onchange="checkExploreForm()" style="padding:10px 36px 10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;color:var(--ink);background:var(--surface);font-family:var(--font);outline:none;appearance:none;-webkit-appearance:none;width:100%">
+          <option value="">All Universities</option>
+          <option value="UT Austin">UT Austin</option>
+          <option value="Texas A&M University">Texas A&amp;M University</option>
+          <option value="Texas Tech University">Texas Tech University</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="explore-filter-field" style="flex:1;min-width:160px">
+      <label class="field-label">Major</label>
+      <input type="text" id="explore-major" placeholder="e.g. Computer Science…" oninput="checkExploreForm()" style="padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;color:var(--ink);background:var(--surface);font-family:var(--font);outline:none;transition:border-color 0.12s;width:100%">
+    </div>
+
+    <div class="explore-filter-interests">
+      <label class="field-label">Interests</label>
+      <div class="interests-selected" id="explore-sel" style="margin-bottom:0.4rem">
+        <span class="interests-placeholder" id="explore-placeholder">Select interests…</span>
+      </div>
+      <div class="interests-options" id="explore-options"></div>
+    </div>
+
+    <div class="explore-filter-btn">
+      <button class="btn-generate" id="btn-explore" disabled onclick="generateExplore()">Explore</button>
+    </div>
+  </div>
+
+  <div id="explore-loading" style="display:none">
+    <div class="loading-inline"><div class="spinner"></div>Finding opportunities across all Texas universities…</div>
+  </div>
+  <div id="explore-error" style="display:none"></div>
+
+  <div id="explore-results" style="display:none">
+    <div class="explore-two-panel">
+      <!-- Left: list -->
+      <div class="explore-list-card">
+        <div class="explore-list-header">
+          <div class="explore-list-count" id="explore-results-title"></div>
+          <div class="explore-type-filters" id="explore-filter-row"></div>
+        </div>
+        <div id="explore-results-grid"></div>
+      </div>
+      <!-- Right: detail -->
+      <div class="explore-detail-card" id="explore-detail-panel">
+        <div class="explore-detail-empty">Select an opportunity to see details.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end #explore-view -->
 
 <!-- ══ ROADMAP VIEW ══ -->
 <div id="roadmap-view" style="display:none">
@@ -1288,7 +1778,7 @@ body {
 
   <div class="page-header">
     <h1>Search history</h1>
-    <p>Your past opportunity searches. Click any result to reload it.</p>
+    <p>Your past opportunity searches. Select any entry to review details.</p>
   </div>
 
   <div id="history-content">
@@ -1297,50 +1787,6 @@ body {
 
 </div><!-- end #history-view -->
 
-<!-- ══ EXPLORE VIEW ══ -->
-<div id="explore-view" style="display:none">
-
-  <div class="page-header">
-    <h1>Explore opportunities</h1>
-    <p>Browse programs across all three universities by major and interest area.</p>
-  </div>
-
-  <div class="form-card">
-    <div class="form-card-title">Filter opportunities</div>
-
-    <div class="field">
-      <label class="field-label">Major</label>
-      <input type="text" id="explore-major" placeholder="e.g. Computer Science, Biology, Business…" oninput="checkExploreForm()">
-    </div>
-
-    <div class="field">
-      <label class="field-label">Interests</label>
-      <div class="interests-selected" id="explore-sel">
-        <span class="interests-placeholder" id="explore-placeholder">Select interests…</span>
-      </div>
-      <div class="interests-options" id="explore-options"></div>
-    </div>
-
-    <div class="form-actions">
-      <button class="btn-generate" id="btn-explore" disabled onclick="generateExplore()">Explore</button>
-    </div>
-  </div>
-
-  <div id="explore-loading" style="display:none">
-    <div class="loading-inline"><div class="spinner"></div>Finding opportunities across all Texas universities…</div>
-  </div>
-  <div id="explore-error" style="display:none"></div>
-  <div id="explore-results" style="display:none">
-    <div class="results-header">
-      <div class="results-title" id="explore-results-title"></div>
-    </div>
-    <div class="filter-row" id="explore-filter-row"></div>
-    <div class="results-showing" id="explore-results-showing"></div>
-    <div class="results-grid" id="explore-results-grid"></div>
-  </div>
-
-</div><!-- end #explore-view -->
-
 <!-- ══ DEADLINES VIEW ══ -->
 <div id="deadlines-view" style="display:none">
 
@@ -1348,6 +1794,8 @@ body {
     <h1>Deadline Tracker</h1>
     <p>Deadlines you've saved from your opportunities.</p>
   </div>
+
+  <div id="deadlines-stats-row" class="deadlines-stats-row"></div>
 
   <div id="deadlines-content">
     <div class="history-empty">Loading…</div>
@@ -1520,6 +1968,8 @@ body {
   var exploreInterests = [];
   var exploreOpps = [];
   var exploreTypeFilter = null;
+  var selectedExploreIndex = -1;
+  var exploreFiltered = [];
 
   function renderExploreInterests() {
     var box = document.getElementById('explore-sel');
@@ -1553,22 +2003,24 @@ body {
 
   async function generateExplore() {
     if (!currentUser) { openAuthModal(); return; }
+    var uniVal = document.getElementById('explore-uni-select').value;
     var major = document.getElementById('explore-major').value.trim();
     if (!major || exploreInterests.length === 0) return;
+    var university = uniVal ? uniVal : 'UT Austin, Texas A&M University, and Texas Tech University';
     document.getElementById('explore-results').style.display = 'none';
     document.getElementById('explore-error').style.display = 'none';
     document.getElementById('explore-loading').style.display = 'block';
+    selectedExploreIndex = -1;
     try {
       var res = await fetch('/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ university: 'UT Austin, Texas A&M University, and Texas Tech University', major: major, interests: exploreInterests })
+        body: JSON.stringify({ university: university, major: major, interests: exploreInterests })
       });
       var data = await res.json();
       if (data.error) throw new Error(data.error);
       exploreOpps = data.opportunities;
       exploreTypeFilter = null;
-      document.getElementById('explore-results-title').textContent = exploreOpps.length + ' opportunities found';
       buildExploreFilters(exploreOpps);
       renderExploreGrid();
       document.getElementById('explore-results').style.display = 'block';
@@ -1598,13 +2050,58 @@ body {
     document.querySelectorAll('[data-etype]').forEach(function(c) {
       c.classList.toggle('on', c.getAttribute('data-etype') === (type || ''));
     });
+    selectedExploreIndex = -1;
     renderExploreGrid();
   }
 
   function renderExploreGrid() {
-    var filtered = exploreTypeFilter ? exploreOpps.filter(function(o) { return o.type === exploreTypeFilter; }) : exploreOpps;
-    document.getElementById('explore-results-showing').textContent = exploreTypeFilter ? 'Showing ' + filtered.length + ' of ' + exploreOpps.length : '';
-    document.getElementById('explore-results-grid').innerHTML = filtered.map(function(o) { return renderCard(o, 'explore'); }).join('');
+    exploreFiltered = exploreTypeFilter ? exploreOpps.filter(function(o) { return o.type === exploreTypeFilter; }) : exploreOpps;
+    document.getElementById('explore-results-title').textContent = exploreFiltered.length + ' opportunities found';
+    document.getElementById('explore-results-grid').innerHTML = exploreFiltered.map(function(o, i) {
+      return '<div class="explore-row" onclick="selectExploreOpp(' + i + ')">'
+        + '<div class="explore-row-main">'
+        + '<div class="explore-row-name">' + esc(o.name) + '</div>'
+        + (o.university ? '<span class="uni-badge" style="margin-bottom:4px;display:inline-block">' + esc(o.university) + '</span>' : '')
+        + '<div class="explore-row-overview">' + esc(o.overview) + '</div>'
+        + '</div>'
+        + '<div class="explore-row-right">'
+        + '<div class="explore-row-deadline">' + esc(o.deadline || '') + '</div>'
+        + (o.difficulty ? '<span class="diff-badge ' + diffClass(o.difficulty) + '">' + esc(o.difficulty) + '</span>' : '')
+        + '</div>'
+        + '</div>';
+    }).join('');
+    // reset detail
+    document.getElementById('explore-detail-panel').innerHTML = '<div class="explore-detail-empty">Select an opportunity to see details.</div>';
+  }
+
+  function selectExploreOpp(i) {
+    selectedExploreIndex = i;
+    document.querySelectorAll('.explore-row').forEach(function(r, idx) {
+      r.classList.toggle('active', idx === i);
+    });
+    renderExploreDetail(exploreFiltered[i]);
+  }
+
+  function renderExploreDetail(o) {
+    if (!o) return;
+    var isSaved = savedDeadlineNames.has(o.name);
+    var dlKey = encodeURIComponent(o.name);
+    var saveBtn = currentUser
+      ? '<button class="btn-detail-secondary' + (isSaved ? ' saved' : '') + '" data-dl-name="' + dlKey + '"'
+        + (isSaved ? ' disabled' : ' onclick="saveDeadlineByName(\'' + dlKey + '\',\'explore\')"')
+        + '>' + (isSaved ? 'Saved ✓' : '+ Deadline') + '</button>'
+      : '';
+    document.getElementById('explore-detail-panel').innerHTML =
+      '<div class="explore-detail-name">' + esc(o.name) + '</div>'
+      + (o.university ? '<span class="uni-badge" style="display:inline-block;margin-bottom:0.875rem">' + esc(o.university) + '</span>' : '')
+      + '<div class="explore-detail-section"><div class="explore-detail-label">Overview</div><div class="explore-detail-value">' + esc(o.overview) + '</div></div>'
+      + '<div class="explore-detail-section"><div class="explore-detail-label">Deadline</div><div class="explore-detail-value">' + esc(o.deadline) + '</div></div>'
+      + (o.notes ? '<div class="explore-detail-section"><div class="explore-detail-label">Special Notes</div><div class="explore-detail-value">' + esc(o.notes) + '</div></div>' : '')
+      + '<div class="explore-detail-section"><div class="explore-detail-label">Difficulty</div><div class="explore-detail-value"><span class="diff-badge ' + diffClass(o.difficulty) + '">' + esc(o.difficulty) + '</span></div></div>'
+      + '<div class="explore-detail-actions">'
+      + '<a class="btn-detail-primary" href="' + esc(o.url) + '" target="_blank" rel="noopener">Visit official page →</a>'
+      + saveBtn
+      + '</div>';
   }
 
   /* ── Deadlines ── */
@@ -1633,7 +2130,7 @@ body {
       opportunity_type: o.type || '',
       deadline: o.deadline,
       url: o.url || '',
-      university: source === 'explore' ? 'Texas Universities' : currentUni
+      university: source === 'explore' ? (o.university || 'Texas Universities') : currentUni
     });
     if (!result.error) {
       savedDeadlineNames.add(o.name);
@@ -1646,38 +2143,64 @@ body {
     }
   }
 
-  async function refreshDeadlines() {
-    var el = document.getElementById('deadlines-content');
-    if (!currentUser) { el.innerHTML = '<div class="history-empty">Sign in to track deadlines.</div>'; return; }
-    var result = await supabaseClient.from('deadlines').select().eq('user_id', currentUser.id).order('created_at', { ascending: false });
-    var list = result.data || [];
-    if (list.length === 0) {
-      el.innerHTML = '<div class="history-empty">No deadlines saved yet — click <strong>+ Deadline</strong> on any opportunity card to add it here.</div>';
-      return;
-    }
-    el.innerHTML = '<div class="deadlines-list">' + list.map(function(d) {
-      return '<div class="deadline-card">'
-        + '<div class="deadline-info">'
-        + '<div class="deadline-name">' + esc(d.opportunity_name) + '</div>'
-        + '<div class="deadline-meta">' + esc(d.opportunity_type || '') + (d.university ? ' · ' + esc(d.university) : '') + '</div>'
-        + '<div class="deadline-date">⏰ ' + esc(d.deadline) + '</div>'
-        + (d.url ? '<a class="opp-link" href="' + esc(d.url) + '" target="_blank" rel="noopener" style="font-size:12px;margin-top:2px">Official page →</a>' : '')
-        + '</div>'
-        + '<button class="btn-remove-dl" onclick="removeDeadline(\'' + esc(d.id) + '\')" title="Remove">'
-        + '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>'
-        + '</button>'
-        + '</div>';
-    }).join('') + '</div>';
-  }
-
   async function removeDeadline(id) {
     if (!supabaseClient || !currentUser) return;
     await supabaseClient.from('deadlines').delete().eq('id', id).eq('user_id', currentUser.id);
     refreshDeadlines();
   }
 
+  async function refreshDeadlines() {
+    var statsEl = document.getElementById('deadlines-stats-row');
+    var el = document.getElementById('deadlines-content');
+    if (!currentUser) {
+      statsEl.innerHTML = '';
+      el.innerHTML = '<div class="history-empty">Sign in to track deadlines.</div>';
+      return;
+    }
+    var result = await supabaseClient.from('deadlines').select().eq('user_id', currentUser.id).order('created_at', { ascending: false });
+    var list = result.data || [];
+
+    // Stats
+    var total = list.length;
+    var utCount = list.filter(function(d) { return d.university && d.university.indexOf('UT Austin') !== -1; }).length;
+    var amCount = list.filter(function(d) { return d.university && d.university.indexOf('A&M') !== -1; }).length;
+    var ttCount = list.filter(function(d) { return d.university && d.university.indexOf('Texas Tech') !== -1; }).length;
+    statsEl.innerHTML = [
+      { label: 'Total tracked', value: total },
+      { label: 'UT Austin', value: utCount },
+      { label: 'Texas A&M', value: amCount },
+      { label: 'Texas Tech', value: ttCount }
+    ].map(function(s) {
+      return '<div class="stat-card"><div class="stat-card-label">' + s.label + '</div><div class="stat-card-value">' + s.value + '</div></div>';
+    }).join('');
+
+    if (list.length === 0) {
+      el.innerHTML = '<div class="deadlines-table-card"><div class="deadlines-empty-state">No deadlines saved yet — click <strong>+ Deadline</strong> on any opportunity card to add it here.</div></div>';
+      return;
+    }
+
+    el.innerHTML = '<div class="deadlines-table-card"><table class="deadlines-table">'
+      + '<thead><tr>'
+      + '<th>Opportunity</th><th>University</th><th>Deadline</th><th>Difficulty</th><th></th>'
+      + '</tr></thead>'
+      + '<tbody>'
+      + list.map(function(d) {
+          return '<tr>'
+            + '<td><div class="dl-opp-cell"><div class="dl-dot"></div><span class="dl-opp-name">' + esc(d.opportunity_name) + '</span></div></td>'
+            + '<td>' + (d.university ? '<span class="uni-badge">' + esc(d.university) + '</span>' : '—') + '</td>'
+            + '<td>' + esc(d.deadline || '—') + '</td>'
+            + '<td>' + (d.opportunity_type ? '<span class="diff-badge d-mod">' + esc(d.opportunity_type) + '</span>' : '—') + '</td>'
+            + '<td><button class="btn-remove-dl" onclick="removeDeadline(\'' + esc(d.id) + '\')" title="Remove">'
+            + '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>'
+            + '</button></td>'
+            + '</tr>';
+        }).join('')
+      + '</tbody></table></div>';
+  }
+
   /* ── Profile + History ── */
   var historyCache = [];
+  var selectedHistoryIndex = -1;
 
   async function loadProfile() {
     if (!supabaseClient || !currentUser) return;
@@ -1719,6 +2242,7 @@ body {
     var searches = (searchRes.data || []).map(function(s) { return Object.assign({}, s, { _type: 'search' }); });
     var roadmaps = (roadmapRes.data || []).map(function(r) { return Object.assign({}, r, { _type: 'roadmap' }); });
     historyCache = searches.concat(roadmaps).sort(function(a, b) { return new Date(b.created_at) - new Date(a.created_at); });
+    selectedHistoryIndex = -1;
     renderHistoryList(historyCache);
   }
 
@@ -1728,30 +2252,76 @@ body {
       el.innerHTML = '<div class="history-empty">No history yet — generate opportunities or a roadmap and they\'ll appear here.</div>';
       return;
     }
-    el.innerHTML = '<div class="history-list">' + items.map(function(s, i) {
+    var leftRows = items.map(function(s, i) {
       var d = new Date(s.created_at);
       var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       var isRoadmap = s._type === 'roadmap';
       var badge = isRoadmap
-        ? '<div class="history-card-count" style="background:#F0FDF4;color:#16A34A;border:1px solid #BBF7D0">4-Year Roadmap</div>'
-        : '<div class="history-card-count">' + (s.opportunities || []).length + ' opportunities</div>';
-      var tags = isRoadmap
-        ? '<div class="history-opp-tags"><span class="history-opp-tag">Semester-by-semester plan</span><span class="history-opp-tag">8 semesters</span></div>'
-        : '<div class="history-opp-tags">'
-          + (s.opportunities || []).slice(0, 6).map(function(o) { return '<span class="history-opp-tag">' + esc(o.name) + '</span>'; }).join('')
-          + ((s.opportunities || []).length > 6 ? '<span class="history-opp-tag">+' + ((s.opportunities || []).length - 6) + ' more</span>' : '')
-          + '</div>';
-      var btn = isRoadmap
-        ? '<button class="btn-load-results" onclick="loadHistoryRoadmap(' + i + ')">Load roadmap →</button>'
-        : '<button class="btn-load-results" onclick="loadHistorySearch(' + i + ')">Load results →</button>';
-      return '<div class="history-card">'
-        + '<div class="history-card-header"><div>'
-        + '<div class="history-card-title">' + esc(s.university) + ' — ' + esc(s.major) + '</div>'
-        + '<div class="history-card-sub">' + esc((s.interests || []).join(', ')) + '</div>'
-        + '<div class="history-card-date">' + esc(dateStr) + '</div>'
-        + '</div>' + badge + '</div>'
-        + tags + btn + '</div>';
-    }).join('') + '</div>';
+        ? '<span class="history-roadmap-badge">4-Year Roadmap</span>'
+        : '<span class="history-count-badge">' + (s.opportunities || []).length + ' opps</span>';
+      return '<div class="history-row" onclick="selectHistoryEntry(' + i + ')">'
+        + '<div class="history-row-title">' + esc(s.university) + ' · ' + esc(s.major) + '</div>'
+        + '<div class="history-row-interests">' + esc((s.interests || []).join(', ')) + '</div>'
+        + '<div class="history-row-meta"><span class="history-row-date">' + esc(dateStr) + '</span>' + badge + '</div>'
+        + '</div>';
+    }).join('');
+
+    el.innerHTML = '<div class="history-two-panel">'
+      + '<div class="history-left-panel"><div class="history-panel-header">Recent searches</div><div class="history-left-scroll">' + leftRows + '</div></div>'
+      + '<div class="history-right-panel" id="history-right-panel"><div class="history-detail-empty">Select a search from the left to view details.</div></div>'
+      + '</div>';
+  }
+
+  function selectHistoryEntry(i) {
+    selectedHistoryIndex = i;
+    document.querySelectorAll('.history-row').forEach(function(r, idx) {
+      r.classList.toggle('active', idx === i);
+    });
+    renderHistoryDetail(historyCache[i]);
+  }
+
+  function renderHistoryDetail(s) {
+    var panel = document.getElementById('history-right-panel');
+    if (!panel || !s) return;
+    var isRoadmap = s._type === 'roadmap';
+    var d = new Date(s.created_at);
+    var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    var opps = s.opportunities || [];
+    var loadBtn = isRoadmap
+      ? '<button class="btn-load-results" onclick="loadHistoryRoadmapFromDetail()">Load roadmap →</button>'
+      : '<button class="btn-load-results" onclick="loadHistorySearchFromDetail()">Load results →</button>';
+    var subtitle = isRoadmap
+      ? 'Semester-by-semester plan'
+      : (s.interests || []).join(', ') + ' · ' + opps.length + ' opportunities';
+    var bulletList = isRoadmap
+      ? '<div class="history-opp-bullet-list"><div class="history-opp-bullet">Semester-by-semester plan</div><div class="history-opp-bullet">8 semesters covered</div></div>'
+      : '<div class="history-opp-bullet-list">' + opps.slice(0, 6).map(function(o) {
+          return '<div class="history-opp-bullet">' + esc(o.name) + '</div>';
+        }).join('') + '</div>';
+    var miniCards = (!isRoadmap && opps.length > 0)
+      ? '<div class="history-detail-section-title">Opportunities generated (' + opps.length + ')</div>'
+        + '<div class="history-mini-grid">' + opps.slice(0, 3).map(function(o) { return renderCard(o, 'home'); }).join('') + '</div>'
+      : '';
+    panel.innerHTML =
+      '<div class="history-detail-title">' + esc(s.university) + ' / ' + esc(s.major) + '</div>'
+      + '<div class="history-detail-sub">' + esc(subtitle) + '</div>'
+      + loadBtn
+      + '<div class="history-meta-grid">'
+      + '<div class="history-meta-cell"><div class="history-meta-cell-label">University</div><div class="history-meta-cell-value">' + esc(s.university) + '</div></div>'
+      + '<div class="history-meta-cell"><div class="history-meta-cell-label">Major</div><div class="history-meta-cell-value">' + esc(s.major) + '</div></div>'
+      + '<div class="history-meta-cell"><div class="history-meta-cell-label">Generated</div><div class="history-meta-cell-value">' + esc(dateStr) + '</div></div>'
+      + '</div>'
+      + '<div class="history-detail-section-title">Included in this search</div>'
+      + bulletList
+      + miniCards;
+  }
+
+  function loadHistorySearchFromDetail() {
+    loadHistorySearch(selectedHistoryIndex);
+  }
+
+  function loadHistoryRoadmapFromDetail() {
+    loadHistoryRoadmap(selectedHistoryIndex);
   }
 
   function loadHistorySearch(index) {
@@ -1770,6 +2340,11 @@ body {
     document.getElementById('copy-btn').textContent = 'Copy list';
     buildFilters(allOpps);
     renderFilteredGrid();
+    // update preview
+    var previewList = document.getElementById('rec-preview-list');
+    previewList.innerHTML = allOpps.slice(0, 6).map(function(o) {
+      return '<div class="rec-preview-item"><div class="rec-dot"></div>' + esc(o.name) + '</div>';
+    }).join('');
     document.getElementById('results-section').style.display = 'block';
     showView('home');
     setTimeout(function() { document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
@@ -1818,19 +2393,16 @@ body {
     var placeholder = document.getElementById('interests-placeholder');
     var optionsEl = document.getElementById('interests-options');
 
-    // selected chips
     var chips = selectedInterests.map(function(i) {
       return '<span class="sel-chip">' + esc(i)
         + '<button class="sel-chip-remove" onclick="removeInterest(\'' + i.replace(/'/g, "\\'") + '\')">×</button>'
         + '</span>';
     }).join('');
 
-    // remove old chips (keep placeholder)
     Array.from(box.querySelectorAll('.sel-chip')).forEach(function(el) { el.remove(); });
     box.insertAdjacentHTML('afterbegin', chips);
     placeholder.style.display = selectedInterests.length > 0 ? 'none' : '';
 
-    // available options
     var available = INTEREST_OPTIONS.filter(function(i) {
       return selectedInterests.indexOf(i) === -1;
     });
@@ -1950,6 +2522,12 @@ body {
       document.getElementById('results-title').textContent = allOpps.length + ' opportunities found';
       document.getElementById('results-meta').textContent = major + ' · ' + selectedInterests.slice(0,3).join(', ') + (selectedInterests.length > 3 ? ' + more' : '');
       document.getElementById('copy-btn').textContent = 'Copy list';
+
+      // Update preview panel
+      var previewList = document.getElementById('rec-preview-list');
+      previewList.innerHTML = allOpps.slice(0, 6).map(function(o) {
+        return '<div class="rec-preview-item"><div class="rec-dot"></div>' + esc(o.name) + '</div>';
+      }).join('');
 
       buildFilters(allOpps);
       renderFilteredGrid();
