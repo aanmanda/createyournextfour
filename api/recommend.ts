@@ -39,7 +39,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const { university, major, interests } = parsed.data;
 
-  const prompt = `You are a college advisor. Generate 5-6 real, specific opportunity recommendations for this student:
+  const prompt = `You are a college advisor. Generate 10-12 real, specific opportunity recommendations for this student:
 - University: ${university}
 - Major: ${major}
 - Interests: ${interests.join(", ")}
@@ -62,7 +62,7 @@ Each item must have exactly these fields:
   try {
     const message = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
-      max_tokens: 2048,
+      max_tokens: 4096,
       messages: [{ role: "user", content: prompt }],
     });
 
