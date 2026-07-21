@@ -2568,8 +2568,8 @@ body {
       .maybeSingle();
     if (error) return true; // fail open
     var count = data ? data.count : 0;
-    if (count >= 4) {
-      alert('You\'ve used all 4 "Generate More" credits for today. Come back tomorrow!');
+    if (count >= 6) {
+      alert('You\'ve used all 6 "Generate More" credits for today. Come back tomorrow!');
       return false;
     }
     if (data) {
