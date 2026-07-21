@@ -2558,25 +2558,6 @@ body {
   }
 
   async function checkAndIncrementUsage() {
-    if (!supabaseClient || !currentUser) return true;
-    var today = new Date().toISOString().slice(0, 10);
-    var { data, error } = await supabaseClient
-      .from('daily_usage')
-      .select('count')
-      .eq('user_id', currentUser.id)
-      .eq('date', today)
-      .maybeSingle();
-    if (error) return true; // fail open
-    var count = data ? data.count : 0;
-    if (count >= 6) {
-      alert('You\'ve used all 6 "Generate More" credits for today. Come back tomorrow!');
-      return false;
-    }
-    if (data) {
-      await supabaseClient.from('daily_usage').update({ count: count + 1 }).eq('user_id', currentUser.id).eq('date', today);
-    } else {
-      await supabaseClient.from('daily_usage').insert({ user_id: currentUser.id, date: today, count: 1 });
-    }
     return true;
   }
 
