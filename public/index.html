@@ -2014,12 +2014,30 @@ body {
     document.getElementById('btn-explore').disabled = !(major && exploreInterests.length > 0);
   }
 
+  function exploreSessionKey(university, major, interests) {
+    return 'explore:' + university + '|' + major + '|' + interests.slice().sort().join(',');
+  }
+
   async function generateExplore() {
     if (!currentUser) { openAuthModal(); return; }
     var uniVal = document.getElementById('explore-uni-select').value;
     var major = document.getElementById('explore-major').value.trim();
     if (!major || exploreInterests.length === 0) return;
     var university = uniVal ? uniVal : 'UT Austin, Texas A&M University, and Texas Tech University';
+
+    // Check sessionStorage cache first
+    var cacheKey = exploreSessionKey(university, major, exploreInterests);
+    var cached = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      exploreOpps = JSON.parse(cached);
+      exploreTypeFilter = null;
+      buildExploreFilters(exploreOpps);
+      renderExploreGrid();
+      document.getElementById('explore-results').style.display = 'block';
+      document.getElementById('explore-gen-more-wrap').style.display = 'block';
+      return;
+    }
+
     document.getElementById('explore-results').style.display = 'none';
     document.getElementById('explore-error').style.display = 'none';
     document.getElementById('explore-loading').style.display = 'block';
@@ -2033,6 +2051,7 @@ body {
       var data = await res.json();
       if (data.error) throw new Error(data.error);
       exploreOpps = data.opportunities;
+      sessionStorage.setItem(cacheKey, JSON.stringify(exploreOpps));
       exploreTypeFilter = null;
       buildExploreFilters(exploreOpps);
       renderExploreGrid();
@@ -2703,6 +2722,27 @@ body {
     document.getElementById('roadmap-error').style.display = 'none';
 
     try {
+      // Check if a roadmap already exists for this exact profile
+      if (supabaseClient && currentUser) {
+        var { data: existing } = await supabaseClient
+          .from('roadmaps')
+          .select('roadmap')
+          .eq('user_id', currentUser.id)
+          .eq('university', currentUni)
+          .eq('major', currentMajor)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        if (existing && existing.roadmap) {
+          roadmapGenerated = true;
+          renderRoadmap(existing.roadmap);
+          document.getElementById('roadmap-result').style.display = 'block';
+          document.getElementById('roadmap-loading').style.display = 'none';
+          document.getElementById('btn-gen-roadmap').disabled = false;
+          return;
+        }
+      }
+
       var res = await fetch('/api/roadmap', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
