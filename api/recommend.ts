@@ -55,7 +55,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 - Major: ${major}
 - Interests: ${interests.join(", ")}
 
-Include well-known AND lesser-known programs. Be specific — use real program names that actually exist at ${university}.${excludeClause}
+Only include programs you are highly confident exist at ${university} under their exact official name. If you are unsure whether a program exists or what it is called, skip it and choose a well-known program instead. Do not invent or approximate program names.${excludeClause}
 
 Respond with ONLY a JSON array. No prose, no markdown fences, no explanation. Your entire response must start with [ and end with ].
 

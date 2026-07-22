@@ -51,7 +51,7 @@ Student profile:
 
 Create a realistic semester-by-semester roadmap for all 8 semesters (Freshman Fall through Senior Spring).
 
-For each semester, recommend 2-4 specific opportunities the student should pursue or prepare for. Focus on experiences — research programs, organizations, competitions, internships, fellowships — not courses. Only mention a specific course when it is a required prerequisite for an opportunity.
+For each semester, recommend 2-4 specific opportunities the student should pursue or prepare for. Focus on experiences — research programs, organizations, competitions, internships, fellowships — not courses. Only mention a specific course when it is a required prerequisite for an opportunity. Only include programs and organizations you are highly confident exist at ${university} under their exact official name. If unsure, choose a well-known opportunity instead of guessing.
 
 Time opportunities realistically:
 - Freshman year: orientation programs, early research, foundational clubs, getting to know campus
