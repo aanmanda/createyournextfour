@@ -1601,9 +1601,22 @@ body {
         <div class="select-wrap">
           <select id="uni-select" onchange="checkForm()">
             <option value="">Select a university…</option>
-            <option value="UT Austin">UT Austin</option>
-            <option value="Texas A&M University">Texas A&amp;M University</option>
-            <option value="Texas Tech University">Texas Tech University</option>
+            <optgroup label="Texas">
+              <option value="UT Austin">UT Austin</option>
+              <option value="Texas A&M University">Texas A&amp;M University</option>
+              <option value="Texas Tech University">Texas Tech University</option>
+              <option value="University of Houston">University of Houston</option>
+              <option value="University of North Texas">University of North Texas</option>
+              <option value="UT Dallas">UT Dallas</option>
+            </optgroup>
+            <optgroup label="Out of State">
+              <option value="UCLA">UCLA</option>
+              <option value="University of Michigan">University of Michigan</option>
+              <option value="University of Illinois Urbana-Champaign">University of Illinois Urbana-Champaign</option>
+              <option value="Georgia Tech">Georgia Tech</option>
+              <option value="University of Florida">University of Florida</option>
+              <option value="Penn State">Penn State</option>
+            </optgroup>
           </select>
         </div>
       </div>
@@ -1684,9 +1697,22 @@ body {
       <div class="select-wrap" style="min-width:180px">
         <select id="explore-uni-select" onchange="checkExploreForm()" style="padding:10px 36px 10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;color:var(--ink);background:var(--surface);font-family:var(--font);outline:none;appearance:none;-webkit-appearance:none;width:100%">
           <option value="">All Universities</option>
-          <option value="UT Austin">UT Austin</option>
-          <option value="Texas A&M University">Texas A&amp;M University</option>
-          <option value="Texas Tech University">Texas Tech University</option>
+          <optgroup label="Texas">
+            <option value="UT Austin">UT Austin</option>
+            <option value="Texas A&M University">Texas A&amp;M University</option>
+            <option value="Texas Tech University">Texas Tech University</option>
+            <option value="University of Houston">University of Houston</option>
+            <option value="University of North Texas">University of North Texas</option>
+            <option value="UT Dallas">UT Dallas</option>
+          </optgroup>
+          <optgroup label="Out of State">
+            <option value="UCLA">UCLA</option>
+            <option value="University of Michigan">University of Michigan</option>
+            <option value="University of Illinois Urbana-Champaign">University of Illinois Urbana-Champaign</option>
+            <option value="Georgia Tech">Georgia Tech</option>
+            <option value="University of Florida">University of Florida</option>
+            <option value="Penn State">Penn State</option>
+          </optgroup>
         </select>
       </div>
     </div>
